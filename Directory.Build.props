@@ -1,9 +1,25 @@
 <Project>
+	<!-- Compiler settings -->
 	<PropertyGroup>
-		<!-- Compiler settings -->
 		<LangVersion>11.0</LangVersion>
-		<Nullable>enable</Nullable>
-		<Deterministic>true</Deterministic>
 		<ImplicitUsings>disable</ImplicitUsings>
+	    <Nullable>enable</Nullable>
+		<Deterministic>true</Deterministic>
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+		<FileAlignment>4096</FileAlignment>
+	</PropertyGroup>
+
+	<!-- Version info -->
+	<PropertyGroup>
+	    <AssemblyName>Larine.$(MSBuildProjectName)</AssemblyName>
+	    <RootNamespace>Larine.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<Authors>Antoine Larine</Authors>
+		<Company>Antoine Larine</Company>
+		<Product>JsonRPC</Product>
+		<Title>JsonRPC</Title>
+		<Copyright>© Antoine Larine, 2023</Copyright>
+		<VersionPrefix>0.9.0</VersionPrefix>
+		<VersionSuffix>alpha</VersionSuffix>
+		<NeutralLanguage>en</NeutralLanguage>
 	</PropertyGroup>
 </Project>

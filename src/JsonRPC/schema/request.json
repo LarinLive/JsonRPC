@@ -1,0 +1,54 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"description": "A JSON-RPC 2.0 Request Schema",
+	"oneOf": [
+		{
+			"description": "An individual request",
+			"$ref": "#/$defs/request"
+		},
+		{
+			"description": "A batch of requests",
+			"type": "array",
+			"minItems": 1,
+			"items": {
+				"$ref": "#/$defs/request"
+			}
+		}
+	],
+	"$defs": {
+		"request": {
+			"type": "object",
+			"properties": {
+				"jsonrpc": {
+					"type": "string",
+					"const": "2.0"
+				},
+				"method": {
+					"type": "string"
+				},
+				"id": {
+					"type": [
+						"string",
+						"number",
+						"null"
+					],
+					"note": [
+						"While allowed, null should be avoided: http://www.jsonrpc.org/specification#id1",
+						"While allowed, a number with a fractional part should be avoided: http://www.jsonrpc.org/specification#id2"
+					]
+				},
+				"params": {
+					"type": [
+						"array",
+						"object"
+					]
+				}
+			},
+			"required": [
+				"jsonrpc",
+				"method"
+			],
+			"unevaluatedProperties": false
+		}
+	}
+}

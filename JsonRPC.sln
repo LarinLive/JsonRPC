@@ -12,9 +12,35 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{0450F0E0
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonRPC", "src\JsonRPC\JsonRPC.csproj", "{CEA0E2DB-34A4-48C1-B05C-705605F8841C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E5C09A83-8E4E-4E1C-8F5A-A1D6DEF5951A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{90423816-2148-4B78-A1B2-45FB89219183}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonRPC.UnitTests", "tests\JsonRPC.UnitTests\JsonRPC.UnitTests.csproj", "{0700B392-561D-46C6-937A-C2AA87ACDF5D}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CEA0E2DB-34A4-48C1-B05C-705605F8841C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEA0E2DB-34A4-48C1-B05C-705605F8841C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEA0E2DB-34A4-48C1-B05C-705605F8841C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEA0E2DB-34A4-48C1-B05C-705605F8841C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0700B392-561D-46C6-937A-C2AA87ACDF5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0700B392-561D-46C6-937A-C2AA87ACDF5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0700B392-561D-46C6-937A-C2AA87ACDF5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0700B392-561D-46C6-937A-C2AA87ACDF5D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CEA0E2DB-34A4-48C1-B05C-705605F8841C} = {E5C09A83-8E4E-4E1C-8F5A-A1D6DEF5951A}
+		{0700B392-561D-46C6-937A-C2AA87ACDF5D} = {90423816-2148-4B78-A1B2-45FB89219183}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42F76AFC-CBD6-4298-96E0-6CF8B22CFB8F}

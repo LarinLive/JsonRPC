@@ -1,0 +1,113 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"description": "A JSON-RPC 2.0 Response Schema",
+	"oneOf": [
+		{
+			"description": "An individual successful response",
+			"$ref": "#/$defs/success"
+		},
+		{
+			"description": "An individual faulty response",
+			"$ref": "#/$defs/error"
+		},
+		{
+			"description": "A batch of responses",
+			"type": "array",
+			"minItems": 1,
+			"items": {
+				"oneOf": [
+					{
+						"description": "An individual successful response",
+						"$ref": "#/$defs/success"
+					},
+					{
+						"description": "An individual faulty response",
+						"$ref": "#/$defs/error"
+					}
+				]
+			}
+		}
+	],
+	"$defs": {
+		"response": {
+			"type": "object",
+			"properties": {
+				"jsonrpc": {
+					"type": "string",
+					"const": "2.0"
+				},
+				"id": {
+					"type": [
+						"string",
+						"number",
+						"null"
+					],
+					"note": [
+						"While allowed, null should be avoided: http://www.jsonrpc.org/specification#id1",
+						"While allowed, a number with a fractional part should be avoided: http://www.jsonrpc.org/specification#id2"
+					]
+				}
+			},
+			"required": [
+				"jsonrpc",
+				"id"
+			],
+			"not": {
+				"description": "cannot have result and error at the same time",
+				"required": [
+					"result",
+					"error"
+				]
+			}
+		},
+		"success": {
+			"description": "A success. The result member is required and can be anything",
+			"allOf": [
+				{
+					"$ref": "#/$defs/response"
+				}
+			],
+			"properties": {
+				"result": {
+					"description": "required, can be anything"
+				}
+			},
+			"required": [
+				"result"
+			],
+			"unevaluatedProperties": true
+		},
+		"error": {
+			"description": "A failure. The error member is required",
+			"allOf": [
+				{
+					"$ref": "#/$defs/response"
+				}
+			],
+			"properties": {
+				"error": {
+					"properties": {
+						"code": {
+							"type": "integer"
+						},
+						"message": {
+							"type": "string"
+						},
+						"data": {
+							"description": "optional, can be anything"
+						}
+					},
+					"required": [
+						"code",
+						"message"
+					],
+					"unevaluatedProperties": false
+				}
+			},
+			"required": [
+				"error"
+			],
+			"unevaluatedProperties": true
+		}
+	}
+}
