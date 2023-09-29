@@ -64,8 +64,8 @@ public sealed class JsonRpcError
 	/// <summary>
 	/// Creates a new <see cref="JsonRpcError"/> instance with the code and the message from this object and with the given error details
 	/// </summary>
-	/// <param name="data"></param>
-	/// <returns></returns>
+	/// <param name="data">A new error details</param>
+	/// <returns>A newly created <see cref="JsonRpcError"/> instance</returns>
 	public JsonRpcError CopyWithData(JsonNode? data)
 	{
 		return new JsonRpcError(Code, Message, data);
