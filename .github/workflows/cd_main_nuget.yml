@@ -20,6 +20,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore --configuration release --property GeneratePackageOnBuild=true;PublicRelease=true
+      run: dotnet build --no-restore --configuration release /p:GeneratePackageOnBuild=true /p:PublicRelease=true
     - name: Test
       run: dotnet test --no-build --configuration release --verbosity normal
