@@ -23,3 +23,7 @@ jobs:
       run: dotnet build --no-restore --configuration release /p:GeneratePackageOnBuild=true /p:PublicRelease=true
     - name: Test
       run: dotnet test --no-build --configuration release --verbosity normal
+    - name: Publish package to Nuget.org
+      run: dotnet nuget push **/*.nupkg --api-key ${{ secrets.NUGET_API_KEY_GITHUB_CD_JSONRPC }} --source https://api.nuget.org/v3/index.json
+    - name: Publish symbol package to Nuget.org
+      run: dotnet nuget push **/*.snupkg --api-key ${{ secrets.NUGET_API_KEY_GITHUB_CD_JSONRPC }} --source https://api.nuget.org/v3/index.json
