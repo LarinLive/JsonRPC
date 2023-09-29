@@ -77,6 +77,6 @@ public sealed class JsonRpcError
 	/// <returns>A string that represents the current object.</returns>
 	public override string ToString()
 	{
-		return $"Code: {Code}; Message = {Message}; Data = { Data ?? "null"}";
+		return $"Code = {Code}, Message = \"{Message}\", Data = { Data ?? "null"}";
 	}
 }
