@@ -18,8 +18,15 @@
 		<Product>JsonRPC</Product>
 		<Title>JsonRPC</Title>
 		<Copyright>© Antoine Larine, 2023</Copyright>
-		<VersionPrefix>0.9.0</VersionPrefix>
-		<VersionSuffix>alpha</VersionSuffix>
 		<NeutralLanguage>en</NeutralLanguage>
 	</PropertyGroup>
+
+	<!-- Use Nerdbank.GitVersioning -->
+	<ItemGroup>
+		<PackageReference 
+			Include="Nerdbank.GitVersioning"
+			Version="3.6.133"
+			PrivateAssets="all"
+			Condition="!Exists('packages.config')" />
+	</ItemGroup>
 </Project>

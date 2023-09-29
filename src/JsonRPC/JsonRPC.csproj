@@ -4,28 +4,23 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
-	
+
 	<PropertyGroup>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<PackageTags>json-rpc; json; rpc</PackageTags>
+		<PackageTags>larine.jsonrpc;json-rpc;jsonrpc;openrpc;rpc;larine</PackageTags>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<PackageProjectUrl>https://github.com/AntoineLarine/JsonRPC</PackageProjectUrl>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/AntoineLarine/JsonRPC</RepositoryUrl>
-		<Description>[JsonRPC library](https://github.com/AntoineLarine/JsonRPC) is a .NET-based implementation of the JSON-RPC 2.0 specification</Description>
+		<Description>The JsonRPC library is a .NET-based implementation of the JSON-RPC 2.0 specification</Description>
 		<NoWin32Manifest>true</NoWin32Manifest>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="schema\request.json" />
-    <None Remove="schema\response.json" />
-  </ItemGroup>
-
-  <ItemGroup>
+   <ItemGroup>
     <EmbeddedResource Include="schema\request.json" />
     <EmbeddedResource Include="schema\response.json" />
   </ItemGroup>

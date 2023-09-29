@@ -1,3 +1,4 @@
+using Json.Schema;
 using Larine.JsonRPC.Dispatcher;
 using System;
 using System.Buffers;
@@ -9,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Larine.JsonRPC.OpenRPC.Dispatcher;
 
-public class JsonRpcDelegatedDispatcher : IJsonRpcDispatcher
+public class OpenRpcDispatcher : IJsonRpcDispatcher
 {
 	private readonly IReadOnlyDictionary<string, (OpenRpcMethodDescriptor, Func<JsonRpcRequest, CancellationToken, Task<JsonRpcResponse?>>)> _methods;
 
-	public JsonRpcDelegatedDispatcher(IReadOnlyDictionary<OpenRpcMethodDescriptor, Func<JsonRpcRequest, CancellationToken, Task<JsonRpcResponse?>>> methods)
+	public OpenRpcDispatcher(IReadOnlyDictionary<OpenRpcMethodDescriptor, Func<JsonRpcRequest, CancellationToken, Task<JsonRpcResponse?>>> methods)
 	{
 		_methods = methods.ToDictionary(k => k.Key.Name, v => (v.Key, v.Value));
 	}
@@ -62,5 +63,14 @@ public class JsonRpcDelegatedDispatcher : IJsonRpcDispatcher
 		}
 		return result;
 	}
+
+	protected virtual JsonRpcResponse? ProcessUnhandledException(JsonRpcRequest request, Exception exception)
+	{
+		return request.CreateError(JsonRpcError.InternalError);
+	}
+
+	protected virtual JsonRpcResponse? ProcessInvalidParams(JsonRpcRequest request, EvaluationResults evaluationResults)
+	{
+		return request.CreateError(JsonRpcError.InvalidParams);
+	}
 }
- 
