@@ -1,7 +1,7 @@
 using Json.Schema;
 using System;
 
-namespace Larine.JsonRPC.Dispatcher;
+namespace Larine.JsonRPC.OpenRPC.Dispatcher;
 
 public sealed class OpenRpcMethodDescriptor : IEquatable<OpenRpcMethodDescriptor>
 {

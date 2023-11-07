@@ -3,6 +3,9 @@ using System;
 
 namespace Larine.JsonRPC;
 
+/// <summary>
+/// JSON-RPC parsing exceptions.
+/// </summary>
 public class JsonRpcException : ApplicationException
 {
 	public JsonRpcException(string? message)
