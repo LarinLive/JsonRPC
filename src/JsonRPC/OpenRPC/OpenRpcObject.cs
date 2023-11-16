@@ -33,7 +33,7 @@ public record class OpenRpcObject
 	/// REQUIRED. The available methods for the API. While it is required, the array may be empty (to handle security filtering, for example).
 	/// </summary>
 	[JsonPropertyName("methods")]
-	public MethodObject[] Methods { get; init; }
+	public MethodObject[]? Methods { get; init; }
 
 	/// <summary>
 	/// An element to hold various schemas for the specification.

@@ -3,7 +3,16 @@ using System.Threading.Tasks;
 
 namespace Larine.JsonRPC.Dispatcher;
 
+/// <summary>
+/// The JSON-RPC dispatcher base interface
+/// </summary>
 public interface IJsonRpcDispatcher
 {
-	Task<JsonRpcPacket<JsonRpcResponse>> DispatchAsync(JsonRpcPacket<JsonRpcRequest> request, CancellationToken ct = default);
+	/// <summary>
+	/// Performs a JSON-RPC request asynchronously.
+	/// </summary>
+	/// <param name="request">The request to be performed.</param>
+	/// <param name="ct">The optional cancellation token.</param>
+	/// <returns>A task with a JSON-RPC performing result.</returns>
+	Task<JsonRpcPacket<JsonRpcResponse>> PerformAsync(JsonRpcPacket<JsonRpcRequest> request, CancellationToken ct = default);
 }

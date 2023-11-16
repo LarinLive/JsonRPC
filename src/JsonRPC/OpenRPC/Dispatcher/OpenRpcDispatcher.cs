@@ -39,7 +39,7 @@ public class OpenRpcDispatcher : IJsonRpcDispatcher
 	}
 
 
-	public async Task<JsonRpcPacket<JsonRpcResponse>> DispatchAsync(JsonRpcPacket<JsonRpcRequest> request, CancellationToken ct = default)
+	public async Task<JsonRpcPacket<JsonRpcResponse>> ExecuteAsync(JsonRpcPacket<JsonRpcRequest> request, CancellationToken ct = default)
 	{
 		var result = JsonRpcPacket<JsonRpcResponse>.Empty;
 		if (request.IsBatch)
