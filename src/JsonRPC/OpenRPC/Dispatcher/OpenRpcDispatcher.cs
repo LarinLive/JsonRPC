@@ -39,7 +39,7 @@ public class OpenRpcDispatcher : IJsonRpcDispatcher
 	}
 
 
-	public async Task<JsonRpcPacket<JsonRpcResponse>> ExecuteAsync(JsonRpcPacket<JsonRpcRequest> request, CancellationToken ct = default)
+	public async Task<JsonRpcPacket<JsonRpcResponse>> PerformAsync(JsonRpcPacket<JsonRpcRequest> request, CancellationToken ct = default)
 	{
 		var result = JsonRpcPacket<JsonRpcResponse>.Empty;
 		if (request.IsBatch)
@@ -64,12 +64,12 @@ public class OpenRpcDispatcher : IJsonRpcDispatcher
 		return result;
 	}
 
-	protected virtual JsonRpcResponse? ProcessUnhandledException(JsonRpcRequest request, Exception exception)
+	protected virtual JsonRpcResponse? HandleException(JsonRpcRequest request, Exception exception)
 	{
 		return request.CreateError(JsonRpcError.InternalError);
 	}
 
-	protected virtual JsonRpcResponse? ProcessInvalidParams(JsonRpcRequest request, EvaluationResults evaluationResults)
+	protected virtual JsonRpcResponse? HandleInvalidParamsError(JsonRpcRequest request, EvaluationResults evaluationResults)
 	{
 		return request.CreateError(JsonRpcError.InvalidParams);
 	}
