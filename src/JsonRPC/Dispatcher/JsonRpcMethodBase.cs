@@ -1,19 +1,21 @@
 using Json.Schema;
 using System;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Larine.JsonRPC.Dispatcher;
 
 
 /// <summary>
-/// A JSON-RPC method descriptor for using with <see cref="DelegatedDispatcher"/> class
+/// A base class for JSON-RPC methods
 /// </summary>
-public sealed class MethodDescriptor : IEquatable<MethodDescriptor>
+public abstract class JsonRpcMethodBase : IEquatable<JsonRpcMethodBase>
 {
 	/// <summary>
-	/// Creates a new instance of the <see cref="MethodDescriptor"/> class
+	/// Creates a new instance of the <see cref="JsonRpcMethodBase"/> class
 	/// </summary>
 	/// <param name="name">A method name</param>
-	public MethodDescriptor(string name)
+	public JsonRpcMethodBase(string name)
 	{
 		Name = name;
 	}
@@ -34,7 +36,7 @@ public sealed class MethodDescriptor : IEquatable<MethodDescriptor>
 	public JsonSchema? Result { get; init; }
 
 	/// <inheritdoc/>
-	public bool Equals(MethodDescriptor? other)
+	public bool Equals(JsonRpcMethodBase? other)
 	{
 		if (ReferenceEquals(this, other))
 			return true;
@@ -45,7 +47,7 @@ public sealed class MethodDescriptor : IEquatable<MethodDescriptor>
 	}
 
 	/// <inheritdoc/>
-	public override bool Equals(object? obj) => Equals(obj as MethodDescriptor);
+	public override bool Equals(object? obj) => Equals(obj as JsonRpcMethodBase);
 
 	/// <inheritdoc/>
 	public override int GetHashCode()
@@ -60,7 +62,7 @@ public sealed class MethodDescriptor : IEquatable<MethodDescriptor>
 	}
 
 	/// <inheritdoc/>
-	public static bool operator ==(MethodDescriptor? x, MethodDescriptor? y)
+	public static bool operator ==(JsonRpcMethodBase? x, JsonRpcMethodBase? y)
 	{
 		if (ReferenceEquals(x, y))
 			return true;
@@ -71,5 +73,13 @@ public sealed class MethodDescriptor : IEquatable<MethodDescriptor>
 	}
 
 	/// <inheritdoc/>
-	public static bool operator !=(MethodDescriptor? x, MethodDescriptor? y) => !(x == y);
+	public static bool operator !=(JsonRpcMethodBase? x, JsonRpcMethodBase? y) => !(x == y);
+
+	/// <summary>
+	/// Executes the JSON-RPC method
+	/// </summary>
+	/// <param name="request"></param>
+	/// <param name="ct"></param>
+	/// <returns></returns>
+	public abstract ValueTask<JsonRpcResponse?> ExecuteAsync(JsonRpcRequest request, CancellationToken ct);
 }

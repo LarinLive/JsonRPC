@@ -1,7 +1,5 @@
 using Json.Schema;
 using System;
-using System.Buffers;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -10,19 +8,19 @@ using System.Threading.Tasks;
 namespace Larine.JsonRPC.Dispatcher;
 
 /// <summary>
-/// The delegate-based implementation JSON-RPC dispatcher
+/// The main implementation JSON-RPC dispatcher
 /// </summary>
-public class DelegatedDispatcher : DispatcherBase
+public class JsonRpcDispatcher : JsonRpcDispatcherBase
 {
-	private readonly Dictionary<string, (MethodDescriptor, Func<JsonRpcRequest, CancellationToken, ValueTask<JsonRpcResponse?>>)> _methods;
+	private readonly Dictionary<string, JsonRpcMethodBase> _methods;
 
 	/// <summary>
-	/// Creates a new instance of the <see cref="DelegatedDispatcher"/> class
+	/// Creates a new instance of the <see cref="JsonRpcDispatcher"/> class
 	/// </summary>
 	/// <param name="methods">A JSON-RPC method handlers dictionary</param>
-	public DelegatedDispatcher(IReadOnlyDictionary<MethodDescriptor, Func<JsonRpcRequest, CancellationToken, ValueTask<JsonRpcResponse?>>> methods)
+	public JsonRpcDispatcher(IReadOnlyCollection<JsonRpcMethodBase> methods)
 	{
-		_methods = methods.ToDictionary(k => k.Key.Name, v => (v.Key, v.Value));
+		_methods = methods.ToDictionary(m => m.Name, m => m);
 	}
 
 	/// <inheritdoc/>
@@ -31,14 +29,13 @@ public class DelegatedDispatcher : DispatcherBase
 		var isNotNotification = request.ID is not null;
 		if (_methods.TryGetValue(request.Method, out var descriptor))
 		{
-			var (definition, method) = descriptor;
-			if (definition.Params is not null)
+			if (descriptor.Params is not null)
 			{
-				var paramValidationResult = definition.Params.Evaluate(request.Params);
+				var paramValidationResult = descriptor.Params.Evaluate(request.Params);
 				if (!paramValidationResult.IsValid)
 					return isNotNotification ? request.CreateError(JsonRpcError.InvalidParams) : null;
 			}
-			var response2 = await method(request, ct);
+			var response2 = await descriptor.ExecuteAsync(request, ct);
 			return isNotNotification ? response2 : null;
 		}
 		else

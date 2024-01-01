@@ -11,7 +11,7 @@ namespace Larine.JsonRPC.Dispatcher;
 /// <summary>
 /// The base class for the <see cref="IJsonRpcDispatcher"/> implementations
 /// </summary>
-public abstract class DispatcherBase : IJsonRpcDispatcher
+public abstract class JsonRpcDispatcherBase : IJsonRpcDispatcher
 {
 	/// <summary>
 	/// Executes a JSON-RPC request asynchronously.
@@ -53,7 +53,12 @@ public abstract class DispatcherBase : IJsonRpcDispatcher
 		return result;
 	}
 
-	/// <inheritdoc/>
+	/// <summary>
+	/// Executes a single JSON-RPC request item asynchronously.
+	/// </summary>
+	/// <param name="request">A JSON-RPC request item to be executed.</param>
+	/// <param name="ct">An optional cancellation token.</param>
+	/// <returns>A task with a JSON-RPC result.</returns>
 	protected abstract ValueTask<JsonRpcResponse?> ExecuteRequestItemAsync(JsonRpcRequest request, CancellationToken ct);
 
 	/// <summary>
