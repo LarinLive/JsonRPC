@@ -41,9 +41,4 @@ public class JsonRpcDispatcher : JsonRpcDispatcherBase
 		else
 			return isNotNotification ? request.CreateError(JsonRpcError.MethodNotFound) : null;
 	}
-
-	private JsonRpcResponse? HandleInvalidParamsError(JsonRpcRequest request, EvaluationResults evaluationResults)
-	{
-		return request.CreateError(JsonRpcError.InvalidParams);
-	}
 }

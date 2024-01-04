@@ -17,9 +17,9 @@ public static class JsonNodeExtensions
 		{
 			return element.ValueKind switch
 			{
-				JsonValueKind.Number => new JsonRpcIntegerID((long)id!),
-				JsonValueKind.String => new JsonRpcStringID((string)id!),
-				_ => null
+				JsonValueKind.Number => new JsonRpcID<long>((long)id!),
+				JsonValueKind.String => new JsonRpcID<string>((string)id!),
+				_ => throw JsonRpcException.ThrowUnsupportedIdentifierType()
 			};
 		}
 		else

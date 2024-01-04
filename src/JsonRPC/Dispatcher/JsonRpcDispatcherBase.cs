@@ -32,8 +32,7 @@ public abstract class JsonRpcDispatcherBase : IJsonRpcDispatcher
 					batch.TryAdd(r, response);
 				});
 			var batchResult = batch.Values.Where(v => v is not null).ToArray();
-			if (batchResult.Length > 0)
-				result = batchResult!;
+			result = batchResult!;
 		}
 		else
 		{
