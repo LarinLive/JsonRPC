@@ -13,6 +13,24 @@ public class JsonRpcSchemaTestSuite
 	private static readonly EvaluationOptions _evaluationOptions = new() { OutputFormat = OutputFormat.Hierarchical };
 
 	[Fact]
+	public void RequestSchemaExists()
+	{
+		// arrange & act 
+		var requestSchema = JsonRpcSchema.Request;
+		// act
+		Assert.NotNull(requestSchema);
+	}
+
+	[Fact]
+	public void ResponseSchemaExists()
+	{
+		// arrange & act 
+		var responseSchema = JsonRpcSchema.Response.ToJsonDocument();
+		// act
+		Assert.NotNull(responseSchema);
+	}
+
+	[Fact]
 	public void ValidateRequestSchemaItself()
 	{
 		// arrange
@@ -21,6 +39,14 @@ public class JsonRpcSchemaTestSuite
 		Assert.True(MetaSchemas.Draft202012.Evaluate(requestSchema, _evaluationOptions).IsValid);
 	}
 
+	[Fact]
+	public void ValidateResponseSchemaItself()
+	{
+		// arrange
+		var responseSchema = JsonRpcSchema.Response.ToJsonDocument();
+		// act & assert
+		Assert.True(MetaSchemas.Draft202012.Evaluate(responseSchema, _evaluationOptions).IsValid);
+	}
 
 	[Theory]
 	[InlineData("""{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1}""")]

@@ -15,7 +15,7 @@ public static class JsonRpcSchema
 	{
 		var asm = typeof(JsonRpcSchema).Assembly;
 		var stream = asm.GetManifestResourceStream("Larine.JsonRPC.schema.request.json")!;
-		var schema = JsonSchema.FromStream(stream).Result;
+		var schema = JsonSchema.FromStream(stream).AsTask().Result;
 		return schema;
 	}
 
@@ -23,7 +23,7 @@ public static class JsonRpcSchema
 	{
 		var asm = typeof(JsonRpcSchema).Assembly;
 		var stream = asm.GetManifestResourceStream("Larine.JsonRPC.schema.response.json")!;
-		var schema = JsonSchema.FromStream(stream).Result;
+		var schema = JsonSchema.FromStream(stream).AsTask().Result;
 		return schema;
 	}
 
