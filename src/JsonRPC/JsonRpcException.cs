@@ -1,3 +1,4 @@
+using Json.Schema;
 using System;
 
 namespace Larine.JsonRPC;
@@ -22,7 +23,8 @@ public class JsonRpcException : ApplicationException
 	public JsonRpcException(string? message, Exception? innerException)
 		: base(message, innerException) { }
 
-	//public EvaluationResults[] SchemaEvaluationResult { get; init; } = Array.Empty<EvaluationResults>();
+	//TODO: Refactor schema evaluation errors
+	public EvaluationResults[] SchemaEvaluationResult { get; init; } = Array.Empty<EvaluationResults>();
 
 	/// <summary>
 	/// Creates an instance of the <see cref="JsonRpcException"/> class for a unsupported identifier type

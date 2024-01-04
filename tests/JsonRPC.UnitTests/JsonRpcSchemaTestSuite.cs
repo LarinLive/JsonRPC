@@ -15,7 +15,6 @@ public class JsonRpcSchemaTestSuite
 	[Fact]
 	public void ValidateRequestSchemaItself()
 	{
-		// TODO: refactor
 		// arrange
 		var requestSchema = JsonRpcSchema.Request.ToJsonDocument();
 		// act & assert
