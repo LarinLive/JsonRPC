@@ -3,9 +3,9 @@ using System.Text.Json.Nodes;
 
 namespace Larin.JsonRPC;
 
-public static class JsonRpcPacketExtensions
+public static class JsonRpcSerializationExtensions
 {
-	private static JsonObject ToJsonObject(this JsonRpcRequest request)
+	public static JsonObject ToJsonNode(this JsonRpcRequest request)
 	{
 		var result = new JsonObject()
 			.AddProperty("jsonrpc", "2.0")
@@ -20,13 +20,13 @@ public static class JsonRpcPacketExtensions
 	{
 		JsonNode result;
 		if (request.IsBatch)
-			result = new JsonArray(request.Batch!.Select(i => i.ToJsonObject()).ToArray());
+			result = new JsonArray(request.Batch!.Select(i => i.ToJsonNode()).ToArray());
 		else
-			result = request.Item!.ToJsonObject();
+			result = request.Item!.ToJsonNode();
 		return result;
 	}
 
-	private static JsonObject ToJsonObject(this JsonRpcResponse response)
+	public static JsonObject ToJsonNode(this JsonRpcResponse response)
 	{
 		var result = new JsonObject()
 			.AddProperty("jsonrpc", "2.0")
@@ -49,9 +49,9 @@ public static class JsonRpcPacketExtensions
 	{
 		JsonNode result;
 		if (response.IsBatch)
-			result = new JsonArray(response.Batch!.Select(i => i.ToJsonObject()).ToArray());
+			result = new JsonArray(response.Batch!.Select(i => i.ToJsonNode()).ToArray());
 		else
-			result = response.Item!.ToJsonObject();
+			result = response.Item!.ToJsonNode();
 		return result;
 	}
 }
