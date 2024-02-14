@@ -1,4 +1,4 @@
-namespace Larine.JsonRPC;
+namespace Larin.JsonRPC;
 
 public abstract class JsonRpcObject
 {

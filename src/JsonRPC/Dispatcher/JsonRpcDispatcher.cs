@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Larine.JsonRPC.Dispatcher;
+namespace Larin.JsonRPC.Dispatcher;
 
 /// <summary>
 /// The main implementation JSON-RPC dispatcher

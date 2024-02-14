@@ -1,8 +1,8 @@
-using Larine.JsonRPC.Dispatcher;
+using Larin.JsonRPC.Dispatcher;
 using System.Text.Json.Nodes;
 using Xunit;
 
-namespace Larine.JsonRPC.UnitTests;
+namespace Larin.JsonRPC.UnitTests;
 
 /// <summary>
 /// Tests for the <see cref="JsonRpcDelegatedMethod"/> class

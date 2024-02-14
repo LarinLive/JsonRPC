@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Text.Json.Nodes;
 
-namespace Larine.JsonRPC;
+namespace Larin.JsonRPC;
 
 public static class JsonRpcPacketExtensions
 {

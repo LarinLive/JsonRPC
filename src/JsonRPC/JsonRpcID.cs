@@ -1,7 +1,7 @@
 using System.IO;
 using System.Text.Json.Nodes;
 
-namespace Larine.JsonRPC;
+namespace Larin.JsonRPC;
 
 /// <summary>
 /// The base class for a JSON RPC-request identifier

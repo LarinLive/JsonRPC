@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Larine.JsonRPC.Dispatcher;
+namespace Larin.JsonRPC.Dispatcher;
 
 /// <summary>
 /// A JSON-RPC method with the handler as a delegate

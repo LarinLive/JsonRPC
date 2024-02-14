@@ -1,6 +1,6 @@
 using System.Text.Json.Nodes;
 
-namespace Larine.JsonRPC;
+namespace Larin.JsonRPC;
 
 /// <summary>
 /// Extension methods for the <see cref="JsonRpcRequest"/> class

@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 
-namespace Larine.JsonRPC;
+namespace Larin.JsonRPC;
 
 /// <summary>
 /// Extensions methods for the <see cref="JsonNode"/> class

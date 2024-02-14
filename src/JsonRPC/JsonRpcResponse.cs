@@ -1,6 +1,6 @@
 using System.Text.Json.Nodes;
 
-namespace Larine.JsonRPC;
+namespace Larin.JsonRPC;
 
 public sealed class JsonRpcResponse : JsonRpcObject
 {

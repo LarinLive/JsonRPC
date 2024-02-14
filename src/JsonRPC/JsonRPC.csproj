@@ -10,34 +10,32 @@
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<PackageTags>larine.jsonrpc;json-rpc;jsonrpc;openrpc;rpc;larine</PackageTags>
+		<PackageTags>larin.jsonrpc;json-rpc;jsonrpc;larin</PackageTags>
+		<IncludeContentInPack>true</IncludeContentInPack>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<PackageProjectUrl>https://github.com/AntoineLarine/JsonRPC</PackageProjectUrl>
+		<PackageProjectUrl>https://github.com/AntoineLarin/JsonRPC</PackageProjectUrl>
 		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/AntoineLarine/JsonRPC</RepositoryUrl>
+		<RepositoryUrl>https://github.com/AntoineLarin/JsonRPC</RepositoryUrl>
 		<Description>The JsonRPC library is a .NET-based implementation of the JSON-RPC 2.0 specification</Description>
 		<NoWin32Manifest>true</NoWin32Manifest>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	</PropertyGroup>
 
-   <ItemGroup>
-    <EmbeddedResource Include="schema\request.json" />
-    <EmbeddedResource Include="schema\response.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="schema\request.json" />
+		<EmbeddedResource Include="schema\response.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="$(SolutionDir)LICENSE" Pack="true" Visible="false" PackagePath="" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="JsonSchema.Net" Version="5.4.3" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="JsonSchema.Net" Version="5.4.3" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
 
 </Project>

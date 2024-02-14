@@ -3,7 +3,7 @@ using System;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace Larine.JsonRPC.Dispatcher;
+namespace Larin.JsonRPC.Dispatcher;
 
 
 /// <summary>
