@@ -20,7 +20,7 @@ public static class JsonRpcRequestExtensions
 	/// Creates an error response for the given request object
 	/// </summary>
 	/// <param name="request">A JSON-RPC request</param>
-	/// <param name="result">An error description</param>
+	/// <param name="error">An error description</param>
 	/// <returns>A new instance of the <see cref="JsonRpcResponse"/> with the id of the given request</returns>
 	public static JsonRpcResponse CreateError(this JsonRpcRequest request, JsonRpcError error)
 		=> new(error, request.ID);
