@@ -50,6 +50,7 @@ public class JsonRpcSchemaTestSuite
 
 	[Theory]
 	[InlineData("""{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1}""")]
+	[InlineData("""{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": null}""")]
 	[InlineData("""{"jsonrpc": "2.0", "method": "subtract", "params": {"subtrahend": 23, "minuend": 42}, "id": 3}""")]
 	[InlineData("""{"jsonrpc": "2.0", "method": "update", "params": [1,2,3,4,5]}""")]
 	[InlineData("""
@@ -105,6 +106,7 @@ public class JsonRpcSchemaTestSuite
 	[Theory]
 	[InlineData("""{"jsonrpc": "2.0", "result": 19, "id": 1}""")]
 	[InlineData("""{"jsonrpc": "2.0", "result": -19, "id": 2}""")]
+	[InlineData("""{"jsonrpc": "2.0", "result": -19, "id": null}""")]
 	[InlineData("""
 		[
 			{"jsonrpc": "2.0", "result": 7, "id": "1"}
@@ -157,6 +159,8 @@ public class JsonRpcSchemaTestSuite
 	[InlineData("""[1,2,3]""")]
 	[InlineData("""{"jsonrpc": "2.0", "methogd": "foobar", "params": "bar"}""")]
 	[InlineData("""{"jsonrpc": "2.0", "method": 1, "params": "bar"}""")]
+	[InlineData("""{"jsonrpc": "2.0", "method": "test1", "id": []}""")]
+	[InlineData("""{"jsonrpc": "2.0", "method": "test1", "id": { "property": null}}""")]
 	[InlineData("""{"jsonrpc": "2.0", "method": "test1", "params": "bar", "extra": "2"}""")]
 	[InlineData("""
 		[
@@ -180,6 +184,7 @@ public class JsonRpcSchemaTestSuite
 	[InlineData("""[1]""")]
 	[InlineData("""[1,2,3]""")]
 	[InlineData("""{"jsonrpc": "1.0"}""")]
+	[InlineData("""{"jsonrpc": "2.0", "result": "bar"}""")]
 	[InlineData("""{"jsonrpc": "2.0", "result": "bar", "extra": "foo"}""")]
 	[InlineData("""{"jsonrpc": "2.0", "result": "bar", "error": "bar"}""")]
 	[InlineData("""{"jsonrpc": "2.0", "error": {"code": -42601, "message": "Method not found", "extra": "foo"}, "id": "1"}""")]

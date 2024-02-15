@@ -4,7 +4,7 @@ namespace Larin.JsonRPC;
 /// The structure incapsulates a single JSON-RPC object or a batch of them
 /// </summary>
 /// <typeparam name="T">The type of a packet payload</typeparam>
-public readonly struct JrpcPacket<T> where T : struct, IJrpcObject
+public readonly record struct JrpcPacket<T> where T : struct, IJrpcObject
 {
 	private readonly bool _isBatch;
 	private readonly bool _isNotEmpty;
