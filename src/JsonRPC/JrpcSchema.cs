@@ -6,14 +6,14 @@ namespace Larin.JsonRPC;
 /// <summary>
 /// A holder for JSON schemas for then JSON-RPC 2.0 objects
 /// </summary>
-public static class JsonRpcSchema
+public static class JrpcSchema
 {
 	private static readonly Lazy<JsonSchema> _request = new(BuildRequestSchema);
 	private static readonly Lazy<JsonSchema> _response = new(BuildResponseSchema);
 
 	private static JsonSchema BuildRequestSchema()
 	{
-		var asm = typeof(JsonRpcSchema).Assembly;
+		var asm = typeof(JrpcSchema).Assembly;
 		var stream = asm.GetManifestResourceStream("Larin.JsonRPC.schema.request.json")!;
 		var schema = JsonSchema.FromStream(stream).AsTask().Result;
 		return schema;
@@ -21,7 +21,7 @@ public static class JsonRpcSchema
 
 	private static JsonSchema BuildResponseSchema()
 	{
-		var asm = typeof(JsonRpcSchema).Assembly;
+		var asm = typeof(JrpcSchema).Assembly;
 		var stream = asm.GetManifestResourceStream("Larin.JsonRPC.schema.response.json")!;
 		var schema = JsonSchema.FromStream(stream).AsTask().Result;
 		return schema;

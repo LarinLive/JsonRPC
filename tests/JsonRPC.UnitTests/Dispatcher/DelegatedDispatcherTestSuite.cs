@@ -7,7 +7,7 @@ using Xunit;
 namespace Larin.JsonRPC.UnitTests;
 
 /// <summary>
-/// Tests for the <see cref="JsonRpcDispatcher"/> class
+/// Tests for the <see cref="JsonRpcDelegatedDispatcher"/> class
 /// </summary>
 public class JsonRpcDispatcherTestSuite
 {
@@ -19,8 +19,8 @@ public class JsonRpcDispatcherTestSuite
 					decimal? sum = null;
 					for (var i = 0; i < args.Length; i++)
 						sum = (sum ?? 0M) + args[i];
-					var response = request.CreateResult(JsonValue.Create(sum)!);
-					return ValueTask.FromResult(response)!;
+					var response = (JrpcResponse?)request.CreateResult(JsonValue.Create(sum)!);
+					return Task.FromResult(response);
 				}
 			)
 		{ Params = JsonSchema.FromText("""
@@ -40,8 +40,8 @@ public class JsonRpcDispatcherTestSuite
 	{
 		// arrange
 		var id = Guid.NewGuid().ToString();
-		var dispatcher = new JsonRpcDispatcher(new[] { AddMethod() });
-		var request = new JsonRpcRequest("add", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), new JsonRpcID<string>(id));
+		var dispatcher = new JsonRpcDelegatedDispatcher(new[] { AddMethod() });
+		var request = new JrpcRequest("add", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), new JrpcID<string>(id));
 		
 		// act
 		var result = dispatcher.ExecuteAsync(request, CancellationToken.None)?.Result;
@@ -51,8 +51,8 @@ public class JsonRpcDispatcherTestSuite
 		Assert.False(result.Value.IsEmpty);
 		Assert.False(result.Value.IsBatch);
 		var singleResult = result.Value.Item!;
-		Assert.IsType<JsonRpcID<string>>(singleResult.ID);
-		Assert.Equal(id, ((JsonRpcID<string>)singleResult.ID).Value);
+		Assert.IsType<JrpcID<string>>(singleResult.ID);
+		Assert.Equal(id, ((JrpcID<string>)singleResult.ID).Value);
 		Assert.True(singleResult.IsSuccess);
 		Assert.NotNull(singleResult.Result);
 		Assert.Null(singleResult.Error);
@@ -64,11 +64,11 @@ public class JsonRpcDispatcherTestSuite
 	public void ExecuteBatchRequest()
 	{
 		// arrange
-		var dispatcher = new JsonRpcDispatcher(new[] { AddMethod() });
+		var dispatcher = new JsonRpcDelegatedDispatcher(new[] { AddMethod() });
 		var request = new[]
 		{
-			new JsonRpcRequest("add", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), new JsonRpcID<long>(1)),
-			new JsonRpcRequest("add", new JsonArray(JsonValue.Create(2), JsonValue.Create(3)), new JsonRpcID<long>(2))
+			new JrpcRequest("add", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), new JrpcID<long>(1)),
+			new JrpcRequest("add", new JsonArray(JsonValue.Create(2), JsonValue.Create(3)), new JrpcID<long>(2))
 		};
 
 		// act
@@ -81,14 +81,14 @@ public class JsonRpcDispatcherTestSuite
 		var batchResult = result.Value.Batch!;
 		Assert.Equal(request.Length, batchResult.Length);
 
-		var firstResult = batchResult.Single(i => i.ID is JsonRpcID<long> lid && lid.Value == 1);
+		var firstResult = batchResult.Single(i => i.ID is JrpcID<long> lid && lid.Value == 1);
 		Assert.True(firstResult.IsSuccess);
 		Assert.NotNull(firstResult.Result);
 		Assert.Null(firstResult.Error);
 		Assert.IsAssignableFrom<JsonValue?>(firstResult.Result);
 		Assert.Equal(6M, JsonSerializer.Deserialize<decimal>(firstResult.Result));
 
-		var secondResult = batchResult.Single(i => i.ID is JsonRpcID<long> lid && lid.Value == 2);
+		var secondResult = batchResult.Single(i => i.ID is JrpcID<long> lid && lid.Value == 2);
 		Assert.True(secondResult.IsSuccess);
 		Assert.NotNull(secondResult.Result);
 		Assert.Null(secondResult.Error);
@@ -100,8 +100,8 @@ public class JsonRpcDispatcherTestSuite
 	public void ExecuteSingleNotification()
 	{
 		// arrange
-		var dispatcher = new JsonRpcDispatcher(new[] { AddMethod() });
-		var request = new JsonRpcRequest("add", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), null);
+		var dispatcher = new JsonRpcDelegatedDispatcher(new[] { AddMethod() });
+		var request = new JrpcRequest("add", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), null);
 		// act
 		var result = dispatcher.ExecuteAsync(request, CancellationToken.None)?.Result;
 		// assert
@@ -113,11 +113,11 @@ public class JsonRpcDispatcherTestSuite
 	public void ExecuteBatchNotification()
 	{
 		// arrange
-		var dispatcher = new JsonRpcDispatcher(new[] { AddMethod() });
+		var dispatcher = new JsonRpcDelegatedDispatcher(new[] { AddMethod() });
 		var request = new[]
 		{
-			new JsonRpcRequest("add", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), null),
-			new JsonRpcRequest("add", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), null)
+			new JrpcRequest("add", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), null),
+			new JrpcRequest("add", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), null)
 		};
 		// act
 		var result = dispatcher.ExecuteAsync(request, CancellationToken.None)?.Result;
@@ -135,8 +135,8 @@ public class JsonRpcDispatcherTestSuite
 	{
 		// arrange
 		var id = Guid.NewGuid().ToString();
-		var dispatcher = new JsonRpcDispatcher(new[] { AddMethod() });
-		var request = new JsonRpcRequest("adds", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), new JsonRpcID<string>(id));
+		var dispatcher = new JsonRpcDelegatedDispatcher(new[] { AddMethod() });
+		var request = new JrpcRequest("adds", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), new JrpcID<string>(id));
 		// act
 		var result = dispatcher.ExecuteAsync(request, CancellationToken.None)?.Result;
 		// assert
@@ -144,11 +144,11 @@ public class JsonRpcDispatcherTestSuite
 		Assert.False(result.Value.IsEmpty);
 		Assert.False(result.Value.IsBatch);
 		var singleResult = result.Value.Item!;
-		Assert.IsType<JsonRpcID<string>>(singleResult.ID);
-		Assert.Equal(id, ((JsonRpcID<string>)singleResult.ID).Value);
+		Assert.IsType<JrpcID<string>>(singleResult.ID);
+		Assert.Equal(id, ((JrpcID<string>)singleResult.ID).Value);
 		Assert.False(singleResult.IsSuccess);
 		Assert.Null(singleResult.Result);
 		Assert.NotNull(singleResult.Error);
-		Assert.Equal(JsonRpcError.MethodNotFound.Code, singleResult.Error.Code);
+		Assert.Equal(JrpcError.MethodNotFound.Code, singleResult.Error.Code);
 	}
 }

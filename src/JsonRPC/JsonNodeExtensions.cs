@@ -10,16 +10,16 @@ namespace Larin.JsonRPC;
 /// </summary>
 public static class JsonNodeExtensions
 {
-	private static IJsonRpcID? GetID(JsonValue? id)
+	private static IJrpcID? GetID(JsonValue? id)
 	{
 		var value = id?.GetValue<object>();
 		if (value is JsonElement element)
 		{
 			return element.ValueKind switch
 			{
-				JsonValueKind.Number => new JsonRpcID<long>((long)id!),
-				JsonValueKind.String => new JsonRpcID<string>((string)id!),
-				_ => throw JsonRpcException.ThrowUnsupportedIdentifierType()
+				JsonValueKind.Number => new JrpcID<long>((long)id!),
+				JsonValueKind.String => new JrpcID<string>((string)id!),
+				_ => throw JrpcException.CreateUnsupportedIdentifierType()
 			};
 		}
 		else
@@ -27,21 +27,21 @@ public static class JsonNodeExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static JsonRpcRequest ParseRequestItem(JsonNode input)
+	private static JrpcRequest ParseRequestItem(JsonNode input)
 	{
 		var method = (string)input["method"]!;
 		var idPropertyValue = input["id"]?.AsValue();
 		var id = GetID(idPropertyValue);
-		return new JsonRpcRequest(method, input["params"], id);
+		return new JrpcRequest(method, input["params"], id);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static JsonRpcPacket<JsonRpcRequest> ParseJsonRpcRequest(this JsonNode input)
+	private static JrpcPacket<JrpcRequest> ParseJsonRpcRequest(this JsonNode input)
 	{
 		if (input is JsonArray array)
 		{
 			var items = array.ToArray();
-			var requests = new JsonRpcRequest[items.Length];
+			var requests = new JrpcRequest[items.Length];
 			for (var i = 0; i < array.ToArray().Length; i++)
 				requests[i] = ParseRequestItem(items[i]!);
 			return requests;
@@ -51,31 +51,31 @@ public static class JsonNodeExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static JsonRpcResponse ParseResponseItem(JsonNode input)
+	private static JrpcResponse ParseResponseItem(JsonNode input)
 	{
 		var resultProperty = input["result"]?.AsValue();
 		var errorProperty = input["error"]?.AsValue();
 		var idPropertyValue = input["id"]?.AsValue();
 		var id = GetID(idPropertyValue);
 		if (resultProperty is not null)
-			return new JsonRpcResponse(resultProperty, id);
+			return new JrpcResponse(resultProperty, id);
 		else
 		{
 			var error = errorProperty!.AsObject();
 			var code = (int)error["code"]!;
 			var message = (string)error["message"]!;
 			var dataProperty = error["data"]?.AsValue();
-			return new JsonRpcResponse(new JsonRpcError(code, message, dataProperty), id);
+			return new JrpcResponse(new JrpcError(code, message, dataProperty), id);
 		}
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static JsonRpcPacket<JsonRpcResponse> ParseJsonRpcResponse(this JsonNode input)
+	private static JrpcPacket<JrpcResponse> ParseJsonRpcResponse(this JsonNode input)
 	{
 		if (input is JsonArray array)
 		{
 			var items = array.ToArray();
-			var responses = new JsonRpcResponse[items.Length];
+			var responses = new JrpcResponse[items.Length];
 			for (var i = 0; i < items.Length; i++)
 				responses[i] = ParseResponseItem(items[i]!);
 			return responses;
@@ -84,48 +84,48 @@ public static class JsonNodeExtensions
 			return ParseResponseItem(input);
 	}
 
-	public static (JsonRpcPacket<JsonRpcRequest> Request, JsonRpcPacket<JsonRpcResponse> Response) ToJsonRpcObject(this JsonNode input)
+	public static (JrpcPacket<JrpcRequest> Request, JrpcPacket<JrpcResponse> Response) ToJsonRpcObject(this JsonNode input)
 	{
-		var result1 = JsonRpcSchema.Request.Evaluate(input);
+		var result1 = JrpcSchema.Request.Evaluate(input);
 		if (result1.IsValid)
 		{
 			var requests = input.ParseJsonRpcRequest();
-			return (requests, JsonRpcPacket<JsonRpcResponse>.Empty);
+			return (requests, JrpcPacket<JrpcResponse>.Empty);
 		}
 		else
 		{
-			var result2 = JsonRpcSchema.Response.Evaluate(input);
+			var result2 = JrpcSchema.Response.Evaluate(input);
 			if (result2.IsValid)
 			{
 				var responses = input.ParseJsonRpcResponse();
-				return (JsonRpcPacket<JsonRpcRequest>.Empty, responses);
+				return (JrpcPacket<JrpcRequest>.Empty, responses);
 			}
 			else
-				throw new JsonRpcException("Input does not contain a valid JSON-RPC request") {  SchemaEvaluationResult = new[] { result1, result2 } };
+				throw new JrpcException("Input does not contain a valid JSON-RPC request") {  SchemaEvaluationResult = new[] { result1, result2 } };
 		}
 	}
 
-	public static JsonRpcPacket<JsonRpcRequest> ToJsonRpcRequest(this JsonNode input)
+	public static JrpcPacket<JrpcRequest> ToJsonRpcRequest(this JsonNode input)
 	{
-		var result = JsonRpcSchema.Request.Evaluate(input);
+		var result = JrpcSchema.Request.Evaluate(input);
 		if (result.IsValid)
 		{
 			var requests = input.ParseJsonRpcRequest();
 			return requests;
 		}
 		else
-			throw new JsonRpcException("Input does not contain a valid JSON-RPC request") { SchemaEvaluationResult = new[] { result } };
+			throw new JrpcException("Input does not contain a valid JSON-RPC request") { SchemaEvaluationResult = new[] { result } };
 	}
 
-	public static JsonRpcPacket<JsonRpcResponse> ToJsonRpcResponse(this JsonNode input)
+	public static JrpcPacket<JrpcResponse> ToJsonRpcResponse(this JsonNode input)
 	{
-		var result = JsonRpcSchema.Response.Evaluate(input);
+		var result = JrpcSchema.Response.Evaluate(input);
 		if (result.IsValid)
 		{
 			var responses = input.ParseJsonRpcResponse();
 			return responses;
 		}
 		else
-			throw new JsonRpcException("Input does not contain a valid JSON-RPC response") { SchemaEvaluationResult = new[] { result } };
+			throw new JrpcException("Input does not contain a valid JSON-RPC response") { SchemaEvaluationResult = new[] { result } };
 	}
 }

@@ -6,7 +6,7 @@ using Xunit;
 namespace Larin.JsonRPC.UnitTests;
 
 /// <summary>
-/// Tests for the <see cref="JsonRpcSchema"/> class
+/// Tests for the <see cref="JrpcSchema"/> class
 /// </summary>
 public class JsonRpcSchemaTestSuite
 {
@@ -16,7 +16,7 @@ public class JsonRpcSchemaTestSuite
 	public void RequestSchemaExists()
 	{
 		// arrange & act 
-		var requestSchema = JsonRpcSchema.Request;
+		var requestSchema = JrpcSchema.Request;
 		// act
 		Assert.NotNull(requestSchema);
 	}
@@ -25,7 +25,7 @@ public class JsonRpcSchemaTestSuite
 	public void ResponseSchemaExists()
 	{
 		// arrange & act 
-		var responseSchema = JsonRpcSchema.Response.ToJsonDocument();
+		var responseSchema = JrpcSchema.Response.ToJsonDocument();
 		// act
 		Assert.NotNull(responseSchema);
 	}
@@ -34,7 +34,7 @@ public class JsonRpcSchemaTestSuite
 	public void ValidateRequestSchemaItself()
 	{
 		// arrange
-		var requestSchema = JsonRpcSchema.Request.ToJsonDocument();
+		var requestSchema = JrpcSchema.Request.ToJsonDocument();
 		// act & assert
 		Assert.True(MetaSchemas.Draft202012.Evaluate(requestSchema, _evaluationOptions).IsValid);
 	}
@@ -43,7 +43,7 @@ public class JsonRpcSchemaTestSuite
 	public void ValidateResponseSchemaItself()
 	{
 		// arrange
-		var responseSchema = JsonRpcSchema.Response.ToJsonDocument();
+		var responseSchema = JrpcSchema.Response.ToJsonDocument();
 		// act & assert
 		Assert.True(MetaSchemas.Draft202012.Evaluate(responseSchema, _evaluationOptions).IsValid);
 	}
@@ -70,7 +70,7 @@ public class JsonRpcSchemaTestSuite
 		// arrange
 		var request = JsonNode.Parse(input);
 		// act
-		var result = JsonRpcSchema.Request.Evaluate(request, _evaluationOptions);
+		var result = JrpcSchema.Request.Evaluate(request, _evaluationOptions);
 		// assert
 		Assert.True(result.IsValid);
 	}
@@ -97,7 +97,7 @@ public class JsonRpcSchemaTestSuite
 		// arrange
 		var request = JsonNode.Parse(input);
 		// act
-		var result = JsonRpcSchema.Request.Evaluate(request, _evaluationOptions);
+		var result = JrpcSchema.Request.Evaluate(request, _evaluationOptions);
 		// assert
 		Assert.True(result.IsValid);
 	}
@@ -123,7 +123,7 @@ public class JsonRpcSchemaTestSuite
 		// arrange
 		var response = JsonNode.Parse(input);
 		// act
-		var result = JsonRpcSchema.Response.Evaluate(response, _evaluationOptions);
+		var result = JrpcSchema.Response.Evaluate(response, _evaluationOptions);
 		// assert
 		Assert.True(result.IsValid);
 	}
@@ -145,7 +145,7 @@ public class JsonRpcSchemaTestSuite
 		// arrange
 		var response = JsonNode.Parse(input);
 		// act
-		var result = JsonRpcSchema.Response.Evaluate(response, _evaluationOptions);
+		var result = JrpcSchema.Response.Evaluate(response, _evaluationOptions);
 		// assert
 		Assert.True(result.IsValid);
 	}
@@ -169,7 +169,7 @@ public class JsonRpcSchemaTestSuite
 		// arrange
 		var request = JsonNode.Parse(input);
 		// act
-		var result = JsonRpcSchema.Request.Evaluate(request, _evaluationOptions);
+		var result = JrpcSchema.Request.Evaluate(request, _evaluationOptions);
 		// assert
 		Assert.False(result.IsValid);
 	}
@@ -197,7 +197,7 @@ public class JsonRpcSchemaTestSuite
 		// arrange
 		var response = JsonNode.Parse(input);
 		// act
-		var result = JsonRpcSchema.Response.Evaluate(response, _evaluationOptions);
+		var result = JrpcSchema.Response.Evaluate(response, _evaluationOptions);
 		// assert
 		Assert.False(result.IsValid);
 	}

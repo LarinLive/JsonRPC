@@ -9,8 +9,8 @@ namespace Larin.JsonRPC.UnitTests;
 /// </summary>
 public class JsonRpcDelegatedMethodTestSuite
 {
-	private static ValueTask<JsonRpcResponse?> AddExecuteAsync(JsonRpcRequest request, CancellationToken ct) 
-		=> ValueTask.FromResult((JsonRpcResponse?)request.CreateResult(JsonValue.Create(42)));
+	private static Task<JrpcResponse?> AddExecuteAsync(JrpcRequest request, CancellationToken ct) 
+		=> Task.FromResult((JrpcResponse?)request.CreateResult(JsonValue.Create(42)));
 
 	[Fact]
 	public void SameInterfacesEqual()

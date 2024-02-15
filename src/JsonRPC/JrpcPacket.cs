@@ -4,18 +4,20 @@ namespace Larin.JsonRPC;
 /// The structure incapsulates a single JSON-RPC object or a batch of them
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public struct JsonRpcPacket<T> where T : JsonRpcObject
+public readonly struct JrpcPacket<T> where T : struct, IJrpcObject
 {
 	private readonly bool _isBatch;
-	private readonly T? _item;
+	private readonly bool _isNotEmpty;
+	private readonly T _item;
 	private readonly T[]? _batch;
 
 	/// <summary>
 	/// Incapsulates a single JSON-RPC object in a packet
 	/// </summary>
 	/// <param name="item">A JSON-RPC object</param>
-	public JsonRpcPacket(T item)
+	public JrpcPacket(T item)
 	{
+		_isNotEmpty = true;
 		_isBatch = false;
 		_item = item;
 	}
@@ -24,27 +26,27 @@ public struct JsonRpcPacket<T> where T : JsonRpcObject
 	/// Incapsulates a JSON-RPC object batch in a packet
 	/// </summary>
 	/// <param name="batch">A batch or JSON-RPC objects</param>
-	public JsonRpcPacket(T[] batch)
+	public JrpcPacket(T[] batch)
 	{
+		_isNotEmpty = true;
 		_isBatch = true;
 		_batch = batch;
 	}
 
-
 	/// <summary>
-	/// Gets a value indicating that the current <see cref="JsonRpcPacket{T}"/> object holds at least one item
+	/// Gets a value indicating that the current <see cref="JrpcPacket{T}"/> object holds at least one item
 	/// </summary>
-	public bool IsEmpty => _item is null && _batch is null;
+	public bool IsEmpty => !_isNotEmpty;
 
 	private void VerifyIsNotEmpty()
 	{
-		if (IsEmpty)
-			throw JsonRpcException.ThrowPacketIsEmpty();
+		if (!_isNotEmpty)
+			JrpcException.CreatePacketIsEmpty();
 	}
 
 
 	/// <summary>
-	/// Gets a value indicating that the current <see cref="JsonRpcPacket{T}"/> object holds an object batch
+	/// Gets a value indicating that the current <see cref="JrpcPacket{T}"/> object holds an object batch
 	/// </summary>
 	public bool IsBatch
 	{
@@ -58,7 +60,7 @@ public struct JsonRpcPacket<T> where T : JsonRpcObject
 	/// <summary>
 	/// A single JSON-RPC object
 	/// </summary>
-	public T? Item
+	public T Item
 	{
 		get
 		{
@@ -70,12 +72,12 @@ public struct JsonRpcPacket<T> where T : JsonRpcObject
 	/// <summary>
 	/// A JSON-RPC object batch
 	/// </summary>
-	public T[]? Batch
+	public T[] Batch
 	{
 		get
 		{
 			VerifyIsNotEmpty();
-			return _batch;
+			return _batch!;
 		}
 	}
 
@@ -86,23 +88,23 @@ public struct JsonRpcPacket<T> where T : JsonRpcObject
 	public T[] ToArray()
 	{
 		VerifyIsNotEmpty();
-		return _isBatch? _batch! : new T[] { _item! };
+		return _isBatch ? _batch! : [_item];
 	}
 
 	/// <summary>
 	/// Incapsulates a single JSON-RPC object in a packet
 	/// </summary>
 	/// <param name="item">A JSON-RPC object</param>
-	public static implicit operator JsonRpcPacket<T>(T item) => new(item);
+	public static implicit operator JrpcPacket<T>(T item) => new(item);
 
 	/// <summary>
 	/// Incapsulates a JSON-RPC object batch in a packet
 	/// </summary>
 	/// <param name="batch">A batch or JSON-RPC objects</param>
-	public static implicit operator JsonRpcPacket<T>(T[] batch) => new(batch);
+	public static implicit operator JrpcPacket<T>(T[] batch) => new(batch);
 
 	/// <summary>
 	/// Returns an empty packet instance
 	/// </summary>
-	public static JsonRpcPacket<T> Empty { get; } = new();
+	public static JrpcPacket<T> Empty { get; } = new();
 }

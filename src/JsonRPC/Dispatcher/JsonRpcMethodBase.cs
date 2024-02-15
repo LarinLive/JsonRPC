@@ -7,12 +7,12 @@ namespace Larin.JsonRPC.Dispatcher;
 
 
 /// <summary>
-/// A base class for JSON-RPC methods
+/// A base class for JSON-RPC methods.
 /// </summary>
 public abstract class JsonRpcMethodBase : IEquatable<JsonRpcMethodBase>
 {
 	/// <summary>
-	/// Creates a new instance of the <see cref="JsonRpcMethodBase"/> class
+	/// Creates a new instance of the <see cref="JsonRpcMethodBase"/> class.
 	/// </summary>
 	/// <param name="name">A method name</param>
 	public JsonRpcMethodBase(string name)
@@ -21,17 +21,17 @@ public abstract class JsonRpcMethodBase : IEquatable<JsonRpcMethodBase>
 	}
 
 	/// <summary>
-	/// The method name
+	/// The method name,
 	/// </summary>
 	public string Name { get; init; }
 
 	/// <summary>
-	/// The schema of the method parameters
+	/// The schema of the method parameters,
 	/// </summary>
 	public JsonSchema? Params { get; init; }
 
 	/// <summary>
-	/// The schema of the method result
+	/// The schema of the method result,
 	/// </summary>
 	public JsonSchema? Result { get; init; }
 
@@ -61,7 +61,6 @@ public abstract class JsonRpcMethodBase : IEquatable<JsonRpcMethodBase>
 		return Name;
 	}
 
-	/// <inheritdoc/>
 	public static bool operator ==(JsonRpcMethodBase? x, JsonRpcMethodBase? y)
 	{
 		if (ReferenceEquals(x, y))
@@ -72,14 +71,13 @@ public abstract class JsonRpcMethodBase : IEquatable<JsonRpcMethodBase>
 			return x.Equals(y);
 	}
 
-	/// <inheritdoc/>
 	public static bool operator !=(JsonRpcMethodBase? x, JsonRpcMethodBase? y) => !(x == y);
 
 	/// <summary>
-	/// Executes the JSON-RPC method
+	/// Executes the JSON-RPC method asynchronously.
 	/// </summary>
-	/// <param name="request"></param>
-	/// <param name="ct"></param>
-	/// <returns></returns>
-	public abstract ValueTask<JsonRpcResponse?> ExecuteAsync(JsonRpcRequest request, CancellationToken ct);
+	/// <param name="request">A request to be executed.</param>
+	/// <param name="ct">A cancellation token</param>
+	/// <returns>A task that represents the asynchronous operation.</returns>
+	public abstract Task<JrpcResponse?> ExecuteAsync(JrpcRequest request, CancellationToken ct);
 }

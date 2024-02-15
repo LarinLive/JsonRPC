@@ -1,26 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Text.Json.Nodes;
 
 namespace Larin.JsonRPC;
 
 /// <summary>
-/// A JSON RPC-request identifier
-/// </summary>
-public interface IJsonRpcID
-{
-	/// <summary>
-	/// Serializes a JSON-RPC request identifier to an object of the <see cref="JsonValue"/> class.
-	/// </summary>
-	/// <returns></returns>
-	JsonValue ToJsonValue();
-}
-
-/// <summary>
 /// The class for a JSON RPC-request identifier
 /// </summary>
-public readonly struct JsonRpcID<T>: IJsonRpcID, IEquatable<JsonRpcID<T>>, IEquatable<IJsonRpcID> where T : notnull 
+public readonly struct JrpcID<T>: IJrpcID, IEquatable<JrpcID<T>>, IEquatable<IJrpcID> where T : notnull 
 {
 	private static readonly IReadOnlySet<Type> _allowedTypes = new HashSet<Type>()
 	{
@@ -30,15 +17,15 @@ public readonly struct JsonRpcID<T>: IJsonRpcID, IEquatable<JsonRpcID<T>>, IEqua
 	};
 
 	/// <summary>
-	/// Creates a new instance of the <see cref="JsonRpcID{T}"/> class
+	/// Creates a new instance of the <see cref="JrpcID{T}"/> class
 	/// </summary>
 	/// <param name="value">A value of the identifier</param>
-	public JsonRpcID(T value)
+	public JrpcID(T value)
 	{
 		if (_allowedTypes.Contains(typeof(T)))
 			Value = value;
 		else
-			throw JsonRpcException.ThrowUnsupportedIdentifierType();
+			throw JrpcException.CreateUnsupportedIdentifierType();
 	}
 
 	/// <summary>
@@ -47,17 +34,15 @@ public readonly struct JsonRpcID<T>: IJsonRpcID, IEquatable<JsonRpcID<T>>, IEqua
 	public T Value { get; }
 
 	/// <inheritdoc/>
-	public override string? ToString() => 
-		Value.ToString();
+	public override string? ToString() => Value.ToString();
 
 	/// <inheritdoc/>
-	public override int GetHashCode() =>
-		Value.GetHashCode();
+	public override int GetHashCode() => Value.GetHashCode();
 
 	/// <inheritdoc/>
 	public override bool Equals(object? obj) 
 	{
-		if (obj is JsonRpcID<T> b)
+		if (obj is JrpcID<T> b)
 			return Value.Equals(b.Value);
 		else
 			return false;
@@ -66,7 +51,7 @@ public readonly struct JsonRpcID<T>: IJsonRpcID, IEquatable<JsonRpcID<T>>, IEqua
 	/// <inheritdoc/>
 	public JsonValue ToJsonValue() => Value switch
 	{
-		string s => (JsonValue)s!,
+		string s => (JsonValue)s,
 		Guid s => (JsonValue)s.ToString("D"),
 		long i64 => (JsonValue)i64,
 		int i32 => (JsonValue)i32,
@@ -76,21 +61,24 @@ public readonly struct JsonRpcID<T>: IJsonRpcID, IEquatable<JsonRpcID<T>>, IEqua
 		uint u32 => (JsonValue)u32,
 		ushort u16 => (JsonValue)u16,
 		byte u8 => (JsonValue)u8,
-		_ => throw JsonRpcException.ThrowUnsupportedIdentifierType()
+		_ => throw JrpcException.CreateUnsupportedIdentifierType()
 	};
 
+	/// <inheritdoc/>
+	public bool Equals(JrpcID<T> other) => Value.Equals(other.Value);
 
 	/// <inheritdoc/>
-	public bool Equals(JsonRpcID<T> other) => Value.Equals(other.Value);
-
-	/// <inheritdoc/>
-	public bool Equals(IJsonRpcID? other)
+	public bool Equals(IJrpcID? other)
 	{
 		if (other is null)
 			return false;
 		else if (GetType() == other.GetType())
-			return Value.Equals(((JsonRpcID<T>)other).Value);
+			return Value.Equals(((JrpcID<T>)other).Value);
 		else
 			return false;
 	}
+
+	public static bool operator ==(JrpcID<T> left, JrpcID<T> right) => left.Equals(right);
+
+	public static bool operator !=(JrpcID<T> left, JrpcID<T> right) => !left.Equals(right);
 }

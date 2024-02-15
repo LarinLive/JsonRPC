@@ -6,9 +6,9 @@ namespace Larin.JsonRPC;
 /// <summary>
 /// Extesnion methods for JSON-RPC request serialization
 /// </summary>
-public static class JsonRpcSerializationExtensions
+public static class JrpcSerializationExtensions
 {
-	public static JsonObject ToJsonNode(this JsonRpcRequest request)
+	public static JsonObject ToJsonNode(this JrpcRequest request)
 	{
 		var result = new JsonObject()
 			.AddProperty("jsonrpc", "2.0")
@@ -19,7 +19,7 @@ public static class JsonRpcSerializationExtensions
 		return result;
 	}
 
-	public static JsonNode ToJsonNode(this JsonRpcPacket<JsonRpcRequest> request)
+	public static JsonNode ToJsonNode(this JrpcPacket<JrpcRequest> request)
 	{
 		JsonNode result;
 		if (request.IsBatch)
@@ -29,7 +29,7 @@ public static class JsonRpcSerializationExtensions
 		return result;
 	}
 
-	public static JsonObject ToJsonNode(this JsonRpcResponse response)
+	public static JsonObject ToJsonNode(this JrpcResponse response)
 	{
 		var result = new JsonObject()
 			.AddProperty("jsonrpc", "2.0")
@@ -48,7 +48,7 @@ public static class JsonRpcSerializationExtensions
 		return result;
 	}
 
-	public static JsonNode ToJsonNode(this JsonRpcPacket<JsonRpcResponse> response)
+	public static JsonNode ToJsonNode(this JrpcPacket<JrpcResponse> response)
 	{
 		JsonNode result;
 		if (response.IsBatch)

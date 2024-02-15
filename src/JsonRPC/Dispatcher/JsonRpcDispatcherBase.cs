@@ -18,25 +18,25 @@ public abstract class JsonRpcDispatcherBase : IJsonRpcDispatcher
 	/// <param name="request">A JSON-RPC request (or a batch of requests) to be performed</param>
 	/// <param name="ct">An optional cancellation token.</param>
 	/// <returns>A task with a JSON-RPC result.</returns>
-	public async Task<JsonRpcPacket<JsonRpcResponse>> ExecuteAsync(JsonRpcPacket<JsonRpcRequest> request, CancellationToken ct = default)
+	public async Task<JrpcPacket<JrpcResponse>> ExecuteAsync(JrpcPacket<JrpcRequest> request, CancellationToken ct = default)
 	{
-		var result = JsonRpcPacket<JsonRpcResponse>.Empty;
+		var result = JrpcPacket<JrpcResponse>.Empty;
 		if (request.IsBatch)
 		{
-			var batch = new ConcurrentDictionary<JsonRpcRequest, JsonRpcResponse?>();
+			var batch = new ConcurrentDictionary<JrpcRequest, JrpcResponse?>();
 			await Parallel.ForEachAsync(request.ToArray(), ct,
 				async (r, c) =>
 				{
 					var response = await ExecuteRequestItemAsync(r, c);
 					batch.TryAdd(r, response);
 				});
-			var batchResult = batch.Values.Where(v => v is not null).ToArray();
+			var batchResult = batch.Values.Where(v => v is not null).Select(v => v!.Value).ToArray();
 			result = batchResult!;
 		}
 		else
 		{
 			var singleRequest = request.Item!;
-			JsonRpcResponse? itemResult;
+			JrpcResponse? itemResult;
 			try
 			{
 				itemResult = await ExecuteRequestItemAsync(singleRequest, ct);
@@ -45,8 +45,8 @@ public abstract class JsonRpcDispatcherBase : IJsonRpcDispatcher
 			{
 				itemResult = HandleException(singleRequest, e);
 			}
-			if (itemResult is not null)
-				result = itemResult;
+			if (itemResult.HasValue)
+				result = itemResult.Value;
 		}
 		return result;
 	}
@@ -57,7 +57,7 @@ public abstract class JsonRpcDispatcherBase : IJsonRpcDispatcher
 	/// <param name="request">A JSON-RPC request item to be executed.</param>
 	/// <param name="ct">An optional cancellation token.</param>
 	/// <returns>A task with a JSON-RPC result.</returns>
-	protected abstract ValueTask<JsonRpcResponse?> ExecuteRequestItemAsync(JsonRpcRequest request, CancellationToken ct);
+	protected abstract Task<JrpcResponse?> ExecuteRequestItemAsync(JrpcRequest request, CancellationToken ct);
 
 	/// <summary>
 	/// Creates a JSON-RPC error for the given request exception
@@ -65,6 +65,6 @@ public abstract class JsonRpcDispatcherBase : IJsonRpcDispatcher
 	/// <param name="request">A request whose execution was broken</param>
 	/// <param name="exception">An error occured while the request execution</param>
 	/// <returns></returns>
-	protected virtual JsonRpcResponse? HandleException(JsonRpcRequest request, Exception exception)
-		=> request.CreateError(JsonRpcError.InternalError);
+	protected virtual JrpcResponse? HandleException(JrpcRequest request, Exception exception)
+		=> request.CreateError(JrpcError.InternalError);
 }
