@@ -4,14 +4,14 @@ namespace Larin.JsonRPC;
 
 public sealed class JsonRpcResponse : JsonRpcObject
 {
-	public JsonRpcResponse(JsonNode? result, JsonRpcID? id)
+	public JsonRpcResponse(JsonNode? result, IJsonRpcID? id)
 	{
 		IsSuccess = true;
 		Result = result;
 		ID = id;
 	}
 
-	public JsonRpcResponse(JsonRpcError error, JsonRpcID? id)
+	public JsonRpcResponse(JsonRpcError error, IJsonRpcID? id)
 	{
 		IsSuccess = false;
 		Error = error;
@@ -24,7 +24,7 @@ public sealed class JsonRpcResponse : JsonRpcObject
 
 	public JsonRpcError? Error { get; }
 
-	public JsonRpcID? ID { get; }
+	public IJsonRpcID? ID { get; }
 
 	public override JsonRpcObjectType Type => JsonRpcObjectType.Response;
 }

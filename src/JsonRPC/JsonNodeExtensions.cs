@@ -10,7 +10,7 @@ namespace Larin.JsonRPC;
 /// </summary>
 public static class JsonNodeExtensions
 {
-	private static JsonRpcID? GetID(JsonValue? id)
+	private static IJsonRpcID? GetID(JsonValue? id)
 	{
 		var value = id?.GetValue<object>();
 		if (value is JsonElement element)

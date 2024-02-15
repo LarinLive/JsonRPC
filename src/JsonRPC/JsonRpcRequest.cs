@@ -4,20 +4,20 @@ namespace Larin.JsonRPC;
 
 public class JsonRpcRequest : JsonRpcObject
 {
-	internal JsonRpcRequest(string method, JsonNode? @params, JsonRpcID? id)
+	internal JsonRpcRequest(string method, JsonNode? @params, IJsonRpcID? id)
 	{
 		Method = method;
 		Params = @params;
 		ID = id;
 	}
 
-	public JsonRpcRequest(string method, JsonRpcID? id)
+	public JsonRpcRequest(string method, IJsonRpcID? id)
 		: this(method, (JsonNode?)null, id) { }
 
-	public JsonRpcRequest(string method, JsonArray? @params, JsonRpcID? id)
+	public JsonRpcRequest(string method, JsonArray? @params, IJsonRpcID? id)
 		: this(method, (JsonNode?)@params, id) { }
 
-	public JsonRpcRequest(string method, JsonObject? @params, JsonRpcID? id)
+	public JsonRpcRequest(string method, JsonObject? @params, IJsonRpcID? id)
 		: this(method, (JsonNode?)@params, id) { }
 
 
@@ -25,7 +25,7 @@ public class JsonRpcRequest : JsonRpcObject
 	
 	public JsonNode? Params { get; }
 
-	public JsonRpcID? ID { get; }
+	public IJsonRpcID? ID { get; }
 
 	public override JsonRpcObjectType Type => JsonRpcObjectType.Request;
 }
