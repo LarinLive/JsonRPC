@@ -11,6 +11,11 @@ public enum JrpcObjectType
 	Request,
 
 	/// <summary>
+	/// A JSON-RPC notification
+	/// </summary>
+	Notification,
+
+	/// <summary>
 	/// A JSON-RPC responce
 	/// </summary>
 	Response

@@ -27,5 +27,5 @@ public readonly record struct JrpcRequest : IJrpcObject
 
 	public JsonNode? Params { get; }
 
-	public JrpcObjectType Type { get => JrpcObjectType.Request; }
+	public JrpcObjectType Type => ID is null ? JrpcObjectType.Notification : JrpcObjectType.Request; 
 }

@@ -3,13 +3,20 @@ namespace Larin.JsonRPC;
 /// <summary>
 /// The structure incapsulates a single JSON-RPC object or a batch of them
 /// </summary>
-/// <typeparam name="T"></typeparam>
+/// <typeparam name="T">The type of a packet payload</typeparam>
 public readonly struct JrpcPacket<T> where T : struct, IJrpcObject
 {
 	private readonly bool _isBatch;
 	private readonly bool _isNotEmpty;
 	private readonly T _item;
 	private readonly T[]? _batch;
+
+	/// <summary>
+	/// Incapsulates an empty JSON-RPC object packet
+	/// </summary>
+	public JrpcPacket()
+	{
+	}
 
 	/// <summary>
 	/// Incapsulates a single JSON-RPC object in a packet
@@ -28,6 +35,8 @@ public readonly struct JrpcPacket<T> where T : struct, IJrpcObject
 	/// <param name="batch">A batch or JSON-RPC objects</param>
 	public JrpcPacket(T[] batch)
 	{
+		if (batch.Length == 0)
+			throw JrpcException.BatchIsEmpty();
 		_isNotEmpty = true;
 		_isBatch = true;
 		_batch = batch;
@@ -41,7 +50,7 @@ public readonly struct JrpcPacket<T> where T : struct, IJrpcObject
 	private void VerifyIsNotEmpty()
 	{
 		if (!_isNotEmpty)
-			JrpcException.CreatePacketIsEmpty();
+			JrpcException.PacketIsEmpty();
 	}
 
 
@@ -82,7 +91,7 @@ public readonly struct JrpcPacket<T> where T : struct, IJrpcObject
 	}
 
 	/// <summary>
-	/// Converts the incaplulated JSON-RPC object items to an array
+	/// Converts the incapsulated JSON-RPC object items to an array
 	/// </summary>
 	/// <returns></returns>
 	public T[] ToArray()

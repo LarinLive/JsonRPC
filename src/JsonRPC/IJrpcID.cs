@@ -13,7 +13,7 @@ public interface IJrpcID : IEquatable<IJrpcID>
 	/// Serializes a JSON-RPC request identifier to a <see cref="JsonValue"/> object.
 	/// </summary>
 	/// <returns>An instance of the <see cref="JsonValue"/> class that holds the ID.</returns>
-	JsonValue ToJsonValue();
+	JsonValue? ToJsonValue();
 
 	/// <summary>
 	/// Writes a JSON-RPC request identifier to a <see cref="Utf8JsonWriter"/> object .

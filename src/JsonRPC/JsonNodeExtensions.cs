@@ -10,7 +10,7 @@ namespace Larin.JsonRPC;
 /// </summary>
 public static class JsonNodeExtensions
 {
-	private static IJrpcID? GetID(JsonValue? id)
+	private static IJrpcID GetID(JsonValue? id)
 	{
 		var value = id?.GetValue<object>();
 		if (value is JsonElement element)
@@ -19,19 +19,20 @@ public static class JsonNodeExtensions
 			{
 				JsonValueKind.Number => new JrpcID<long>((long)id!),
 				JsonValueKind.String => new JrpcID<string>((string)id!),
-				_ => throw JrpcException.CreateUnsupportedIdentifierType()
+				_ => throw JrpcException.UnsupportedIdentifierType()
 			};
 		}
 		else
-			return null;
+			return new JrpcNullID();
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static JrpcRequest ParseRequestItem(JsonNode input)
 	{
 		var method = (string)input["method"]!;
-		var idPropertyValue = input["id"]?.AsValue();
-		var id = GetID(idPropertyValue);
+		var idProperty = input["id"];
+		var idPropertyValue = idProperty?.AsValue();
+		var id = idProperty is null ? null : GetID(idPropertyValue);
 		return new JrpcRequest(method, input["params"], id);
 	}
 

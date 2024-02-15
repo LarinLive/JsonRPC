@@ -6,7 +6,7 @@ using System.Text.Json.Nodes;
 namespace Larin.JsonRPC;
 
 /// <summary>
-/// The class for a JSON RPC-request identifier
+/// The class for a JSON-RPC request identifier
 /// </summary>
 public readonly struct JrpcID<T>: IJrpcID, IEquatable<JrpcID<T>>, IEquatable<IJrpcID> where T : notnull 
 {
@@ -26,7 +26,7 @@ public readonly struct JrpcID<T>: IJrpcID, IEquatable<JrpcID<T>>, IEquatable<IJr
 		if (_allowedTypes.Contains(typeof(T)))
 			Value = value;
 		else
-			throw JrpcException.CreateUnsupportedIdentifierType();
+			throw JrpcException.UnsupportedIdentifierType();
 	}
 
 	/// <summary>
@@ -62,7 +62,7 @@ public readonly struct JrpcID<T>: IJrpcID, IEquatable<JrpcID<T>>, IEquatable<IJr
 		uint u32 => (JsonValue)u32,
 		ushort u16 => (JsonValue)u16,
 		byte u8 => (JsonValue)u8,
-		_ => throw JrpcException.CreateUnsupportedIdentifierType()
+		_ => throw JrpcException.UnsupportedIdentifierType()
 	};
 
 	/// <inheritdoc/>
@@ -77,15 +77,13 @@ public readonly struct JrpcID<T>: IJrpcID, IEquatable<JrpcID<T>>, IEquatable<IJr
 	/// <inheritdoc/>
 	public bool Equals(IJrpcID? other)
 	{
-		if (other is null)
-			return false;
-		else if (GetType() == other.GetType())
-			return Value.Equals(((JrpcID<T>)other).Value);
+		if (other is JrpcID<T> b)
+			return Value.Equals(b.Value);
 		else
 			return false;
 	}
 
 	public static bool operator ==(JrpcID<T> left, JrpcID<T> right) => left.Equals(right);
 
-	public static bool operator !=(JrpcID<T> left, JrpcID<T> right) => !left.Equals(right);
+	public static bool operator !=(JrpcID<T> left, JrpcID<T> right) => !(left == right);
 }

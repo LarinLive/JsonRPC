@@ -27,6 +27,6 @@ public readonly record struct JrpcResponse : IJrpcObject
 	public JrpcError? Error { get; }
 
 
-	public JrpcObjectType Type { get => JrpcObjectType.Response; }
+	public JrpcObjectType Type => JrpcObjectType.Response; 
 }
 

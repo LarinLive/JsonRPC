@@ -123,10 +123,7 @@ public class JsonRpcDispatcherTestSuite
 		var result = dispatcher.ExecuteAsync(request, CancellationToken.None)?.Result;
 		// assert
 		Assert.NotNull(result);
-		Assert.False(result.Value.IsEmpty);
-		Assert.True(result.Value.IsBatch);
-		var batchResult = result.Value.Batch!;
-		Assert.Empty(batchResult);
+		Assert.True(result.Value.IsEmpty);
 	}
 
 

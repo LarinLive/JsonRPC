@@ -30,11 +30,17 @@ public class JrpcException : ApplicationException
 	/// Creates an instance of the <see cref="JrpcException"/> class for a unsupported identifier type
 	/// </summary>
 	/// <returns></returns>
-	public static JrpcException CreateUnsupportedIdentifierType() => new("Only string and long types are supported for JSON-RPC identifiers.");
+	public static JrpcException UnsupportedIdentifierType() => new("Only string and long types are supported for JSON-RPC identifiers.");
 
 	/// <summary>
 	/// Creates an instance of the <see cref="JrpcException"/> class for an empty packet
 	/// </summary>
 	/// <returns>A newly created object</returns>
-	public static JrpcException CreatePacketIsEmpty() => new("The JSON-RPC packet is empty.");
+	public static JrpcException PacketIsEmpty() => new("The JSON-RPC packet is empty.");
+
+	/// <summary>
+	/// Creates an instance of the <see cref="JrpcException"/> class for an empty batch
+	/// </summary>
+	/// <returns>A newly created object</returns>
+	public static JrpcException BatchIsEmpty() => new("The JSON-RPC batch should contain at least one item.");
 }
