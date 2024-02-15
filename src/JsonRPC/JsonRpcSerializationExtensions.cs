@@ -3,6 +3,9 @@ using System.Text.Json.Nodes;
 
 namespace Larin.JsonRPC;
 
+/// <summary>
+/// Extesnion methods for JSON-RPC request serialization
+/// </summary>
 public static class JsonRpcSerializationExtensions
 {
 	public static JsonObject ToJsonNode(this JsonRpcRequest request)
