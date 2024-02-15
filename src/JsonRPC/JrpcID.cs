@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 
 namespace Larin.JsonRPC;
@@ -63,6 +64,12 @@ public readonly struct JrpcID<T>: IJrpcID, IEquatable<JrpcID<T>>, IEquatable<IJr
 		byte u8 => (JsonValue)u8,
 		_ => throw JrpcException.CreateUnsupportedIdentifierType()
 	};
+
+	/// <inheritdoc/>
+	public void WriteTo(Utf8JsonWriter writer)
+	{
+		JsonSerializer.Serialize(writer, Value);
+	}
 
 	/// <inheritdoc/>
 	public bool Equals(JrpcID<T> other) => Value.Equals(other.Value);

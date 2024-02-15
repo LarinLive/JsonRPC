@@ -101,7 +101,7 @@ public static class JsonNodeExtensions
 				return (JrpcPacket<JrpcRequest>.Empty, responses);
 			}
 			else
-				throw new JrpcException("Input does not contain a valid JSON-RPC request") {  SchemaEvaluationResult = new[] { result1, result2 } };
+				throw new JrpcException("Input does not contain a valid JSON-RPC request") {  SchemaEvaluationResult = [ result1, result2 ] };
 		}
 	}
 
@@ -114,7 +114,7 @@ public static class JsonNodeExtensions
 			return requests;
 		}
 		else
-			throw new JrpcException("Input does not contain a valid JSON-RPC request") { SchemaEvaluationResult = new[] { result } };
+			throw new JrpcException("Input does not contain a valid JSON-RPC request") { SchemaEvaluationResult = [ result ] };
 	}
 
 	public static JrpcPacket<JrpcResponse> ToJsonRpcResponse(this JsonNode input)
@@ -126,6 +126,6 @@ public static class JsonNodeExtensions
 			return responses;
 		}
 		else
-			throw new JrpcException("Input does not contain a valid JSON-RPC response") { SchemaEvaluationResult = new[] { result } };
+			throw new JrpcException("Input does not contain a valid JSON-RPC response") { SchemaEvaluationResult = [ result ] };
 	}
 }
