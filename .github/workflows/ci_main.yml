@@ -22,9 +22,12 @@ jobs:
       with:
         fetch-depth: 0 # avoid shallow clone so nbgv can do its work.    
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: |
+          6.0.x
+          7.0.x
+          8.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
