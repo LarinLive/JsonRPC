@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 
@@ -13,9 +13,9 @@
 		<PackageTags>LarinLive.jsonrpc;json-rpc;jsonrpc;larin</PackageTags>
 		<IncludeContentInPack>true</IncludeContentInPack>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<PackageProjectUrl>https://github.com/AntoineLarin/JsonRPC</PackageProjectUrl>
+		<PackageProjectUrl>https://github.com/LarinLive/JsonRPC</PackageProjectUrl>
 		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/AntoineLarin/JsonRPC</RepositoryUrl>
+		<RepositoryUrl>https://github.com/LarinLive/JsonRPC</RepositoryUrl>
 		<Description>The JsonRPC library is a .NET-based implementation of the JSON-RPC 2.0 specification</Description>
 		<NoWin32Manifest>true</NoWin32Manifest>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
