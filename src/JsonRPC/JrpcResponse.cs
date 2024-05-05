@@ -1,6 +1,6 @@
 using System.Text.Json.Nodes;
 
-namespace Larin.JsonRPC;
+namespace LarinLive.JsonRPC;
 
 public readonly record struct JrpcResponse : IJrpcObject
 {

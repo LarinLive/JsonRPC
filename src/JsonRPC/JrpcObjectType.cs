@@ -1,4 +1,4 @@
-namespace Larin.JsonRPC;
+namespace LarinLive.JsonRPC;
 
 /// <summary>
 /// Possible JSON-RPC object types

@@ -1,7 +1,7 @@
 using Json.Schema;
 using System;
 
-namespace Larin.JsonRPC;
+namespace LarinLive.JsonRPC;
 
 /// <summary>
 /// A holder for JSON schemas for then JSON-RPC 2.0 objects
@@ -14,7 +14,7 @@ public static class JrpcSchema
 	private static JsonSchema BuildRequestSchema()
 	{
 		var asm = typeof(JrpcSchema).Assembly;
-		var stream = asm.GetManifestResourceStream("Larin.JsonRPC.schema.request.json")!;
+		var stream = asm.GetManifestResourceStream("LarinLive.JsonRPC.schema.request.json")!;
 		var schema = JsonSchema.FromStream(stream).AsTask().Result;
 		return schema;
 	}
@@ -22,7 +22,7 @@ public static class JrpcSchema
 	private static JsonSchema BuildResponseSchema()
 	{
 		var asm = typeof(JrpcSchema).Assembly;
-		var stream = asm.GetManifestResourceStream("Larin.JsonRPC.schema.response.json")!;
+		var stream = asm.GetManifestResourceStream("LarinLive.JsonRPC.schema.response.json")!;
 		var schema = JsonSchema.FromStream(stream).AsTask().Result;
 		return schema;
 	}

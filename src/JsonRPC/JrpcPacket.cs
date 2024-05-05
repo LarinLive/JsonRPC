@@ -1,4 +1,4 @@
-namespace Larin.JsonRPC;
+namespace LarinLive.JsonRPC;
 
 /// <summary>
 /// The structure incapsulates a single JSON-RPC object or a batch of them

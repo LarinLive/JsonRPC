@@ -2,7 +2,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace Larin.JsonRPC;
+namespace LarinLive.JsonRPC;
 
 /// <summary>
 /// Encapsulates a JSON-RPC request identifier.

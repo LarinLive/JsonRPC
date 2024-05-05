@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Larin.JsonRPC;
+namespace LarinLive.JsonRPC;
 
 /// <summary>
 /// 

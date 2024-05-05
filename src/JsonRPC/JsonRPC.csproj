@@ -10,7 +10,7 @@
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<PackageTags>larin.jsonrpc;json-rpc;jsonrpc;larin</PackageTags>
+		<PackageTags>LarinLive.jsonrpc;json-rpc;jsonrpc;larin</PackageTags>
 		<IncludeContentInPack>true</IncludeContentInPack>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<PackageProjectUrl>https://github.com/AntoineLarin/JsonRPC</PackageProjectUrl>
@@ -33,7 +33,7 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JsonSchema.Net" Version="6.0.4" />
+    <PackageReference Include="JsonSchema.Net" Version="7.0.0.3" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

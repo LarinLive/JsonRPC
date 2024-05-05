@@ -1,6 +1,6 @@
 using System.Text.Json.Nodes;
 
-namespace Larin.JsonRPC;
+namespace LarinLive.JsonRPC;
 
 public readonly record struct JrpcRequest : IJrpcObject
 {
@@ -20,11 +20,19 @@ public readonly record struct JrpcRequest : IJrpcObject
 	public JrpcRequest(string method, JsonObject? @params, IJrpcID? id)
 		: this(method, (JsonNode?)@params, id) { }
 
-
-	public string Method { get; }
-
+	/// <summary>
+	/// The request identifier
+	/// </summary>
 	public IJrpcID? ID { get; }
 
+	/// <summary>
+	/// The request method name
+	/// </summary>
+	public string Method { get; }
+
+	/// <summary>
+	/// The request parameters
+	/// </summary>
 	public JsonNode? Params { get; }
 
 	public JrpcObjectType Type => ID is null ? JrpcObjectType.Notification : JrpcObjectType.Request; 

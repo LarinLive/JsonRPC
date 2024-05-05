@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Larin.JsonRPC.Dispatcher;
+namespace LarinLive.JsonRPC.Dispatcher;
 
 /// <summary>
 /// The delegated JSON-RPC dispatcher

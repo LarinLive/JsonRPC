@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json.Nodes;
 
-namespace Larin.JsonRPC;
+namespace LarinLive.JsonRPC;
 
 /// <summary>
 /// Extension methods for the <see cref="JsonObject"/> class

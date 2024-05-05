@@ -1,6 +1,6 @@
 using System;
 
-namespace Larin.JsonRPC;
+namespace LarinLive.JsonRPC;
 
 /// <summary>
 /// Extension methods for the <see cref="Guid"/> values.

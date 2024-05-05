@@ -1,7 +1,7 @@
 using Json.Schema;
 using System;
 
-namespace Larin.JsonRPC;
+namespace LarinLive.JsonRPC;
 
 /// <summary>
 /// JSON-RPC parsing exceptions.

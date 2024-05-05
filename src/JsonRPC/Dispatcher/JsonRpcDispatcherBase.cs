@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Larin.JsonRPC.Dispatcher;
+namespace LarinLive.JsonRPC.Dispatcher;
 
 /// <summary>
 /// The base class for the <see cref="IJsonRpcDispatcher"/> implementations
