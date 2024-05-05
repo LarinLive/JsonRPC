@@ -7,9 +7,9 @@
 
     <IsPackable>false</IsPackable>
 
-    <AssemblyName>Larin.$(MSBuildProjectName)</AssemblyName>
+    <AssemblyName>LarinLive.$(MSBuildProjectName)</AssemblyName>
 
-    <RootNamespace>Larin.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <RootNamespace>LarinLive.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

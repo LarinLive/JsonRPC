@@ -1,10 +1,10 @@
 using Json.Schema;
-using Larin.JsonRPC.Dispatcher;
+using LarinLive.JsonRPC.Dispatcher;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Xunit;
 
-namespace Larin.JsonRPC.UnitTests;
+namespace LarinLive.JsonRPC.UnitTests;
 
 /// <summary>
 /// Tests for the <see cref="JsonRpcDelegatedDispatcher"/> class

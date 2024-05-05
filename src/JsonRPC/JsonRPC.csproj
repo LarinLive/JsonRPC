@@ -10,7 +10,7 @@
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<PackageTags>larin.jsonrpc;json-rpc;jsonrpc;larin</PackageTags>
+		<PackageTags>LarinLive.jsonrpc;json-rpc;jsonrpc;larin</PackageTags>
 		<IncludeContentInPack>true</IncludeContentInPack>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<PackageProjectUrl>https://github.com/AntoineLarin/JsonRPC</PackageProjectUrl>

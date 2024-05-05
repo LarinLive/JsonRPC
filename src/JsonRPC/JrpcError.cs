@@ -1,6 +1,6 @@
 using System.Text.Json.Nodes;
 
-namespace Larin.JsonRPC;
+namespace LarinLive.JsonRPC;
 
 /// <summary>
 /// Represents a JSON-RPC response error information

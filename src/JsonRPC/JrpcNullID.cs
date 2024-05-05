@@ -2,7 +2,7 @@ using System;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 
-namespace Larin.JsonRPC;
+namespace LarinLive.JsonRPC;
 
 /// <summary>
 /// The class for a JSON-RPC null identifier

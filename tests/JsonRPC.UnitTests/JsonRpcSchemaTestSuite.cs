@@ -3,7 +3,7 @@ using Json.Schema;
 using System.Text.Json.Nodes;
 using Xunit;
 
-namespace Larin.JsonRPC.UnitTests;
+namespace LarinLive.JsonRPC.UnitTests;
 
 /// <summary>
 /// Tests for the <see cref="JrpcSchema"/> class
@@ -106,6 +106,7 @@ public class JsonRpcSchemaTestSuite
 	[Theory]
 	[InlineData("""{"jsonrpc": "2.0", "result": 19, "id": 1}""")]
 	[InlineData("""{"jsonrpc": "2.0", "result": -19, "id": 2}""")]
+	[InlineData("""{"jsonrpc": "2.0", "result": null, "id": 2}""")]
 	[InlineData("""{"jsonrpc": "2.0", "result": -19, "id": null}""")]
 	[InlineData("""
 		[

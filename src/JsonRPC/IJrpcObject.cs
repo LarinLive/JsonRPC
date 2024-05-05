@@ -1,4 +1,4 @@
-namespace Larin.JsonRPC;
+namespace LarinLive.JsonRPC;
 
 public interface IJrpcObject
 {
