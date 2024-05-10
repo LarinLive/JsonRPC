@@ -116,6 +116,7 @@ public static class JrpcSerializationExtensions
 				.AddProperty("message", error.Message);
 			if (error.Data is not null)
 				e.AddProperty("data", error.Data);
+			result.AddProperty("error", e);
 		}
 		return result;
 	}

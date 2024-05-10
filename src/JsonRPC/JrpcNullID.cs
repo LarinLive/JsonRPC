@@ -21,6 +21,9 @@ public readonly struct JrpcNullID : IJrpcID, IEquatable<JrpcNullID>, IEquatable<
 	public override int GetHashCode() => 0;
 
 	/// <inheritdoc/>
+	public override string ToString() => "null";
+
+	/// <inheritdoc/>
 	public JsonValue? ToJsonValue() => JsonValue.Create(JsonValueKind.Null);
 
 	/// <inheritdoc/>

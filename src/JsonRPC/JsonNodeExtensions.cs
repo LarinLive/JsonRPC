@@ -107,11 +107,11 @@ public static class JsonNodeExtensions
 	}
 
 	/// <summary>
-	/// Converts a <see cref="JsonNode"/> object to a <see cref="JrpcRequest"/> instance.
+	/// Converts a <see cref="JsonNode"/> object to a JSON-RPC request object.
 	/// </summary>
 	/// <param name="input">An object to convert</param>
 	/// <returns>An instance of the <see cref="JrpcPacket{T}"/> struct that incapsulates a JSON-RPC request.</returns>
-	/// <exception cref="JrpcException"></exception>
+	/// <exception cref="JrpcException">In case of the given JSON represents an invalid JSON-RPC request.</exception>
 	public static JrpcPacket<JrpcRequest> ToJrpcRequest(this JsonNode input)
 	{
 		var result = JrpcSchema.Request.Evaluate(input);
@@ -124,6 +124,12 @@ public static class JsonNodeExtensions
 			throw new JrpcException("Input does not contain a valid JSON-RPC request.") { SchemaEvaluationResult = [ result ] };
 	}
 
+	/// <summary>
+	/// Converts a <see cref="JsonNode"/> object to a JSON-RPC response object.
+	/// </summary>
+	/// <param name="input">An object to convert</param>
+	/// <returns>An instance of the <see cref="JrpcPacket{T}"/> struct that incapsulates a JSON-RPC response.</returns>
+	/// <exception cref="JrpcException">In case of the given JSON represents an invalid JSON-RPC response.</exception>
 	public static JrpcPacket<JrpcResponse> ToJrpcResponse(this JsonNode input)
 	{
 		var result = JrpcSchema.Response.Evaluate(input);
