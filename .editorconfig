@@ -72,7 +72,7 @@ dotnet_naming_rule.non_public_fields_undescore_prefix.severity = warning
 
 dotnet_naming_symbols.any_nonpublic_fields.applicable_kinds = field
 dotnet_naming_symbols.any_nonpublic_fields.applicable_accessibilities = internal, private, protected, protected_internal
-dotnet_naming_symbols.any_nonpublic_fields.required_modifiers = 
+dotnet_naming_symbols.any_nonpublic_fields.required_modifiers =
 
 dotnet_naming_style.undescore_prefix.required_prefix = _
 dotnet_naming_style.undescore_prefix.capitalization = camel_case
@@ -195,3 +195,4 @@ dotnet_style_qualification_for_method = false:silent
 dotnet_style_qualification_for_event = false:silent
 dotnet_style_prefer_collection_expression = when_types_exactly_match:suggestion
 dotnet_diagnostic.IDE0251.severity = none
+dotnet_diagnostic.IDE0290.severity = none

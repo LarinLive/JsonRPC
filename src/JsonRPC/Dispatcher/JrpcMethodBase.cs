@@ -5,17 +5,16 @@ using System.Threading;
 
 namespace LarinLive.JsonRPC.Dispatcher;
 
-
 /// <summary>
 /// A base class for JSON-RPC methods.
 /// </summary>
-public abstract class JsonRpcMethodBase : IEquatable<JsonRpcMethodBase>
+public abstract class JrpcMethodBase : IEquatable<JrpcMethodBase>
 {
 	/// <summary>
-	/// Creates a new instance of the <see cref="JsonRpcMethodBase"/> class.
+	/// Creates a new instance of the <see cref="JrpcMethodBase"/> class.
 	/// </summary>
 	/// <param name="name">A method name</param>
-	public JsonRpcMethodBase(string name)
+	public JrpcMethodBase(string name)
 	{
 		Name = name;
 	}
@@ -36,7 +35,7 @@ public abstract class JsonRpcMethodBase : IEquatable<JsonRpcMethodBase>
 	public JsonSchema? Result { get; init; }
 
 	/// <inheritdoc/>
-	public bool Equals(JsonRpcMethodBase? other)
+	public bool Equals(JrpcMethodBase? other)
 	{
 		if (ReferenceEquals(this, other))
 			return true;
@@ -47,7 +46,7 @@ public abstract class JsonRpcMethodBase : IEquatable<JsonRpcMethodBase>
 	}
 
 	/// <inheritdoc/>
-	public override bool Equals(object? obj) => Equals(obj as JsonRpcMethodBase);
+	public override bool Equals(object? obj) => Equals(obj as JrpcMethodBase);
 
 	/// <inheritdoc/>
 	public override int GetHashCode()
@@ -61,7 +60,7 @@ public abstract class JsonRpcMethodBase : IEquatable<JsonRpcMethodBase>
 		return Name;
 	}
 
-	public static bool operator ==(JsonRpcMethodBase? x, JsonRpcMethodBase? y)
+	public static bool operator ==(JrpcMethodBase? x, JrpcMethodBase? y)
 	{
 		if (ReferenceEquals(x, y))
 			return true;
@@ -71,7 +70,7 @@ public abstract class JsonRpcMethodBase : IEquatable<JsonRpcMethodBase>
 			return x.Equals(y);
 	}
 
-	public static bool operator !=(JsonRpcMethodBase? x, JsonRpcMethodBase? y) => !(x == y);
+	public static bool operator !=(JrpcMethodBase? x, JrpcMethodBase? y) => !(x == y);
 
 	/// <summary>
 	/// Executes the JSON-RPC method asynchronously.

@@ -11,11 +11,11 @@ using Xunit;
 namespace LarinLive.JsonRPC.UnitTests;
 
 /// <summary>
-/// Tests for the <see cref="JsonRpcDelegatedDispatcher"/> class
+/// Tests for the <see cref="JrpcDelegatedDispatcher"/> class
 /// </summary>
 public class JsonRpcDispatcherTestSuite
 {
-	private static JsonRpcDelegatedMethod AddMethod()
+	private static JrpcDelegatedMethod AddMethod()
 		=> new("add",
 				(request, ct) =>
 				{
@@ -44,7 +44,7 @@ public class JsonRpcDispatcherTestSuite
 	{
 		// arrange
 		var id = Guid.NewGuid().ToString();
-		var dispatcher = new JsonRpcDelegatedDispatcher(new[] { AddMethod() });
+		var dispatcher = new JrpcDelegatedDispatcher(new[] { AddMethod() });
 		var request = new JrpcRequest("add", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), new JrpcID<string>(id));
 		
 		// act
@@ -68,7 +68,7 @@ public class JsonRpcDispatcherTestSuite
 	public void ExecuteBatchRequest()
 	{
 		// arrange
-		var dispatcher = new JsonRpcDelegatedDispatcher(new[] { AddMethod() });
+		var dispatcher = new JrpcDelegatedDispatcher(new[] { AddMethod() });
 		var request = new[]
 		{
 			new JrpcRequest("add", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), new JrpcID<long>(1)),
@@ -104,7 +104,7 @@ public class JsonRpcDispatcherTestSuite
 	public void ExecuteSingleNotification()
 	{
 		// arrange
-		var dispatcher = new JsonRpcDelegatedDispatcher(new[] { AddMethod() });
+		var dispatcher = new JrpcDelegatedDispatcher(new[] { AddMethod() });
 		var request = new JrpcRequest("add", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), null);
 		// act
 		var result = dispatcher.ExecuteAsync(request, CancellationToken.None)?.Result;
@@ -117,7 +117,7 @@ public class JsonRpcDispatcherTestSuite
 	public void ExecuteBatchNotification()
 	{
 		// arrange
-		var dispatcher = new JsonRpcDelegatedDispatcher(new[] { AddMethod() });
+		var dispatcher = new JrpcDelegatedDispatcher(new[] { AddMethod() });
 		var request = new[]
 		{
 			new JrpcRequest("add", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), null),
@@ -136,7 +136,7 @@ public class JsonRpcDispatcherTestSuite
 	{
 		// arrange
 		var id = Guid.NewGuid().ToString();
-		var dispatcher = new JsonRpcDelegatedDispatcher(new[] { AddMethod() });
+		var dispatcher = new JrpcDelegatedDispatcher(new[] { AddMethod() });
 		var request = new JrpcRequest("adds", new JsonArray(JsonValue.Create(1), JsonValue.Create(2), JsonValue.Create(3)), new JrpcID<string>(id));
 		// act
 		var result = dispatcher.ExecuteAsync(request, CancellationToken.None)?.Result;

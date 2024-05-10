@@ -8,7 +8,7 @@ using Xunit;
 namespace LarinLive.JsonRPC.UnitTests;
 
 /// <summary>
-/// Tests for the <see cref="JsonRpcDelegatedMethod"/> class
+/// Tests for the <see cref="JrpcDelegatedMethod"/> class
 /// </summary>
 public class JsonRpcDelegatedMethodTestSuite
 {
@@ -19,8 +19,8 @@ public class JsonRpcDelegatedMethodTestSuite
 	public void SameInterfacesEqual()
 	{
 		// arrange
-		var a = new JsonRpcDelegatedMethod("aaa", AddExecuteAsync) as IEquatable<JsonRpcMethodBase>;
-		var b = new JsonRpcDelegatedMethod("aaa", AddExecuteAsync) as IEquatable<JsonRpcMethodBase>;
+		var a = new JrpcDelegatedMethod("aaa", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
+		var b = new JrpcDelegatedMethod("aaa", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
 		// act
 		var result = a.Equals(b);
 		// assert
@@ -31,8 +31,8 @@ public class JsonRpcDelegatedMethodTestSuite
 	public void NullInterfaceInequal()
 	{
 		// arrange
-		var a = new JsonRpcDelegatedMethod("aaa", AddExecuteAsync) as IEquatable<JsonRpcMethodBase>;
-		IEquatable<JsonRpcDelegatedMethod>? b = null;
+		var a = new JrpcDelegatedMethod("aaa", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
+		IEquatable<JrpcDelegatedMethod>? b = null;
 		// act
 		var result = a.Equals(b);
 		// assert
@@ -43,8 +43,8 @@ public class JsonRpcDelegatedMethodTestSuite
 	public void DifferentInterfacesInequal()
 	{
 		// arrange
-		var a = new JsonRpcDelegatedMethod("aaa", AddExecuteAsync) as IEquatable<JsonRpcMethodBase>;
-		var b = new JsonRpcDelegatedMethod("bbb", AddExecuteAsync) as IEquatable<JsonRpcMethodBase>;
+		var a = new JrpcDelegatedMethod("aaa", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
+		var b = new JrpcDelegatedMethod("bbb", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
 		// act
 		var result = a.Equals(b);
 		// assert
@@ -55,8 +55,8 @@ public class JsonRpcDelegatedMethodTestSuite
 	public void DifferentObjectsInequal()
 	{
 		// arrange
-		var a = new JsonRpcDelegatedMethod("aaa", AddExecuteAsync);
-		var b = new JsonRpcDelegatedMethod("bbb", AddExecuteAsync);
+		var a = new JrpcDelegatedMethod("aaa", AddExecuteAsync);
+		var b = new JrpcDelegatedMethod("bbb", AddExecuteAsync);
 		// act
 		var result = a.Equals(b);
 		// assert
@@ -67,8 +67,8 @@ public class JsonRpcDelegatedMethodTestSuite
 	public void SameObjectEqual()
 	{
 		// arrange
-		var a = new JsonRpcDelegatedMethod("aaa", AddExecuteAsync);
-		var b = new JsonRpcDelegatedMethod("aaa", AddExecuteAsync);
+		var a = new JrpcDelegatedMethod("aaa", AddExecuteAsync);
+		var b = new JrpcDelegatedMethod("aaa", AddExecuteAsync);
 		// act
 		var result = a.Equals(b);
 		// assert
@@ -79,7 +79,7 @@ public class JsonRpcDelegatedMethodTestSuite
 	public void NullObjectInequal()
 	{
 		// arrange
-		object a = new JsonRpcDelegatedMethod("aaa", AddExecuteAsync);
+		object a = new JrpcDelegatedMethod("aaa", AddExecuteAsync);
 		object ? b = null;
 		// act
 		var result = a.Equals(b);

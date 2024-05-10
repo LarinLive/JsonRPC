@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace LarinLive.JsonRPC.Dispatcher;
 
 /// <summary>
-/// The base class for the <see cref="IJsonRpcDispatcher"/> implementations
+/// The base class for the <see cref="IJrpcDispatcher"/> implementations
 /// </summary>
-public abstract class JsonRpcDispatcherBase : IJsonRpcDispatcher
+public abstract class JsonRpcDispatcherBase : IJrpcDispatcher
 {
 	/// <summary>
 	/// Executes a JSON-RPC request asynchronously.

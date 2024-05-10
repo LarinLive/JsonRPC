@@ -8,15 +8,15 @@ namespace LarinLive.JsonRPC.Dispatcher;
 /// <summary>
 /// The delegated JSON-RPC dispatcher
 /// </summary>
-public class JsonRpcDelegatedDispatcher : JsonRpcDispatcherBase
+public class JrpcDelegatedDispatcher : JsonRpcDispatcherBase
 {
-	private readonly Dictionary<string, JsonRpcMethodBase> _methods;
+	private readonly Dictionary<string, JrpcMethodBase> _methods;
 
 	/// <summary>
-	/// Creates a new instance of the <see cref="JsonRpcDelegatedDispatcher"/> class
+	/// Creates a new instance of the <see cref="JrpcDelegatedDispatcher"/> class
 	/// </summary>
 	/// <param name="methods">A JSON-RPC method handlers dictionary</param>
-	public JsonRpcDelegatedDispatcher(IReadOnlyCollection<JsonRpcMethodBase> methods)
+	public JrpcDelegatedDispatcher(IReadOnlyCollection<JrpcMethodBase> methods)
 	{
 		_methods = methods.ToDictionary(m => m.Name, m => m);
 	}

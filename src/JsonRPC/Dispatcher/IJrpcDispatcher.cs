@@ -6,7 +6,7 @@ namespace LarinLive.JsonRPC.Dispatcher;
 /// <summary>
 /// The JSON-RPC dispatcher interface
 /// </summary>
-public interface IJsonRpcDispatcher
+public interface IJrpcDispatcher
 {
 	/// <summary>
 	/// Executes a JSON-RPC request asynchronously.

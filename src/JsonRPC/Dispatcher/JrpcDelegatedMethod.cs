@@ -7,16 +7,16 @@ namespace LarinLive.JsonRPC.Dispatcher;
 /// <summary>
 /// A JSON-RPC method with the handler as a delegate
 /// </summary>
-public class JsonRpcDelegatedMethod : JsonRpcMethodBase
+public class JrpcDelegatedMethod : JrpcMethodBase
 {
 	private readonly Func<JrpcRequest, CancellationToken, Task<JrpcResponse?>> _func;
 
 	/// <summary>
-	/// Creates a new instance of the <see cref="JsonRpcDelegatedMethod"/> class
+	/// Creates a new instance of the <see cref="JrpcDelegatedMethod"/> class
 	/// </summary>
 	/// <param name="name">A JSON-RPC method name</param>
 	/// <param name="func">A delegate</param>
-	public JsonRpcDelegatedMethod(string name, Func<JrpcRequest, CancellationToken, Task<JrpcResponse?>> func) : base(name)
+	public JrpcDelegatedMethod(string name, Func<JrpcRequest, CancellationToken, Task<JrpcResponse?>> func) : base(name)
 	{
 		_func = func;
 	}
