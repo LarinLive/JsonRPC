@@ -8,7 +8,7 @@ namespace LarinLive.JsonRPC.Dispatcher;
 /// <summary>
 /// The delegated JSON-RPC dispatcher
 /// </summary>
-public class JrpcDelegatedDispatcher : JsonRpcDispatcherBase
+public class JrpcDelegatedDispatcher : JrpcDispatcherBase
 {
 	private readonly Dictionary<string, JrpcMethodBase> _methods;
 

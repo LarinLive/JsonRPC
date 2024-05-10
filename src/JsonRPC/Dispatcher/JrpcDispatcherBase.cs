@@ -10,7 +10,7 @@ namespace LarinLive.JsonRPC.Dispatcher;
 /// <summary>
 /// The base class for the <see cref="IJrpcDispatcher"/> implementations
 /// </summary>
-public abstract class JsonRpcDispatcherBase : IJrpcDispatcher
+public abstract class JrpcDispatcherBase : IJrpcDispatcher
 {
 	/// <summary>
 	/// Executes a JSON-RPC request asynchronously.
