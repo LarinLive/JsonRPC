@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -11,7 +11,7 @@ namespace LarinLive.JsonRPC;
 /// </summary>
 public static class JrpcErrorExtensions
 {
-	private static JsonObject SerializeException(Exception e, JrpExceptionSerializationOptions options)
+	public static JsonObject ToJsonObject(this Exception e, JrpExceptionSerializationOptions options)
 	{
 		var result = new JsonObject()
 			.AddProperty("type", e.GetType().Name)
@@ -22,16 +22,20 @@ public static class JrpcErrorExtensions
 		if (e.Data is not null)
 		{
 			var data = new JsonObject();
+			var ms = new MemoryStream();
 			foreach (var key in e.Data.Keys.OfType<string>())
 			{
 				var value = e.Data[key];
-				data.AddProperty(key, JsonSerializer.Serialize(value, options.JsonSerializerOptions ?? JsonSerializerOptions.Default));
+				using (var writer = new Utf8JsonWriter(ms))
+					JsonSerializer.Serialize(writer, value, options.JsonSerializerOptions ?? JsonSerializerOptions.Default);
+				ms.Position = 0;
+				data.AddProperty(key, JsonNode.Parse(ms));
 			}
 			result.AddProperty("data", data);
 		}
 
-		if (e.InnerException is not null)
-			result.AddProperty("exception", SerializeException(e.InnerException, options));
+		if (options.IncludeInnerExceptions && e.InnerException is not null)
+			result.AddProperty("exception", e.InnerException.ToJsonObject(options));
 		return result;
 	}
 
@@ -42,8 +46,8 @@ public static class JrpcErrorExtensions
 	/// <param name="exception">An exception to serialize.</param>
 	/// <param name="options">An error serialization options.</param>
 	/// <returns>A newely created instance of <see cref="JrpcError"/> class with the given exception information.</returns>
-	public static JrpcError WithExceptionData(this JrpcError error, Exception exception, JrpExceptionSerializationOptions options)
+	public static JrpcError WithExceptionData(this JrpcError error, Exception exception, JrpExceptionSerializationOptions? options)
 		=> error.CopyWithData(
 			new JsonObject()
-				.AddProperty("exception", SerializeException(exception, options ?? JrpExceptionSerializationOptions.Default)));
+				.AddProperty("exception", exception.ToJsonObject(options ?? JrpExceptionSerializationOptions.Default)));
 }

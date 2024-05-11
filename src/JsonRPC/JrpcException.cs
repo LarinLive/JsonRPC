@@ -1,4 +1,3 @@
-using Json.Schema;
 using System;
 
 namespace LarinLive.JsonRPC;

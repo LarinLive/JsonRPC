@@ -2,9 +2,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Nodes;
 using System.Text.Json;
-using System;
-using Json.More;
-using System.ComponentModel.DataAnnotations;
 using Json.Schema;
 
 namespace LarinLive.JsonRPC;
@@ -114,8 +111,8 @@ public static class JrpcObjectDeserializationExtensions
 			else
 			{
 				var e = new JrpcException($"An input contains neither a valid JSON-RPC request nor a valid JSON-RPC response.");
-				e.Data.Add("JrpcRequestValidationResults", result1);
-				e.Data.Add("JrpcResponseValidationResults", result2);
+				e.Data.Add("JrpcRequestEvaluation", result1);
+				e.Data.Add("JrpcResponseEvaluation", result2);
 				throw e;
 			}
 		}
@@ -138,7 +135,7 @@ public static class JrpcObjectDeserializationExtensions
 		else
 		{
 			var e = new JrpcException($"An input does not contain a valid JSON-RPC request;");
-			e.Data.Add("JrpcRequestValidationResults", result);
+			e.Data.Add("JrpcRequestEvaluation", result);
 			throw e;
 		}
 	}
@@ -160,7 +157,7 @@ public static class JrpcObjectDeserializationExtensions
 		else
 		{
 			var e = new JrpcException($"An input does not contain a valid JSON-RPC response.");
-			e.Data.Add("JrpcResponseValidationResults", result);
+			e.Data.Add("JrpcResponseEvaluation", result);
 			throw e;
 		}
 	}
