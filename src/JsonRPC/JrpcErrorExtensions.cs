@@ -28,7 +28,7 @@ public static class JrpcErrorExtensions
 	/// <param name="exception">An exception</param>
 	/// <param name="includeStackTrace"></param>
 	/// <returns>A newely created instance of <see cref="JrpcError"/> class with the given exception information.</returns>
-	public static JrpcError WithExceptionData(JrpcError error, Exception exception, bool includeStackTrace = false)
+	public static JrpcError WithExceptionData(this JrpcError error, Exception exception, bool includeStackTrace = false)
 		=> error.CopyWithData(
 			new JsonObject()
 				.AddProperty("exception", SerializeException(exception, includeStackTrace)));
