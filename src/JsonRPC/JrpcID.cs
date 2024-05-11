@@ -83,7 +83,9 @@ public readonly struct JrpcID<T>: IJrpcID, IEquatable<JrpcID<T>>, IEquatable<IJr
 			return false;
 	}
 
+	/// <inheritdoc/>
 	public static bool operator ==(JrpcID<T> left, JrpcID<T> right) => left.Equals(right);
 
+	/// <inheritdoc/>
 	public static bool operator !=(JrpcID<T> left, JrpcID<T> right) => !(left == right);
 }

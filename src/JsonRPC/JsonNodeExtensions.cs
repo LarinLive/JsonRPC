@@ -2,6 +2,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Nodes;
 using System.Text.Json;
+using System;
+using Json.More;
 
 namespace LarinLive.JsonRPC;
 
@@ -121,7 +123,7 @@ public static class JsonNodeExtensions
 			return requests;
 		}
 		else
-			throw new JrpcException("Input does not contain a valid JSON-RPC request.") { SchemaEvaluationResult = [ result ] };
+			throw new JrpcException($"Input does not contain a valid JSON-RPC request:{Environment.NewLine}{result.ToJsonDocument()}.") { SchemaEvaluationResult = [ result ] };
 	}
 
 	/// <summary>
@@ -139,6 +141,6 @@ public static class JsonNodeExtensions
 			return responses;
 		}
 		else
-			throw new JrpcException("Input does not contain a valid JSON-RPC response.") { SchemaEvaluationResult = [ result ] };
+			throw new JrpcException($"Input does not contain a valid JSON-RPC response:{Environment.NewLine}{result.ToJsonDocument()}.") { SchemaEvaluationResult = [ result ] };
 	}
 }

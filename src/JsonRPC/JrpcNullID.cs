@@ -38,7 +38,9 @@ public readonly struct JrpcNullID : IJrpcID, IEquatable<JrpcNullID>, IEquatable<
 	/// <inheritdoc/>
 	public bool Equals(IJrpcID? other) => other is JrpcNullID;
 
+	/// <inheritdoc/>
 	public static bool operator ==(JrpcNullID left, JrpcNullID right) => true;
 
+	/// <inheritdoc/>
 	public static bool operator !=(JrpcNullID left, JrpcNullID right) => false;
 }

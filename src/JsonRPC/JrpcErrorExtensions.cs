@@ -12,8 +12,8 @@ public static class JrpcErrorExtensions
 	{
 		var result = new JsonObject()
 			.AddProperty("type", e.GetType().Name)
-			.AddProperty("message", e.Message)
-			.AddProperty("source", e.Source);
+			.AddProperty("source", e.Source)
+			.AddProperty("message", e.Message);
 		if (includeStackTrace)
 			result.AddProperty("stackTrace", e.StackTrace);
 		if (e.InnerException is not null)

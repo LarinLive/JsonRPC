@@ -60,6 +60,7 @@ public abstract class JrpcMethodBase : IEquatable<JrpcMethodBase>
 		return Name;
 	}
 
+	/// <inheritdoc/>
 	public static bool operator ==(JrpcMethodBase? x, JrpcMethodBase? y)
 	{
 		if (ReferenceEquals(x, y))
@@ -70,6 +71,7 @@ public abstract class JrpcMethodBase : IEquatable<JrpcMethodBase>
 			return x.Equals(y);
 	}
 
+	/// <inheritdoc/>
 	public static bool operator !=(JrpcMethodBase? x, JrpcMethodBase? y) => !(x == y);
 
 	/// <summary>
