@@ -12,9 +12,9 @@ namespace LarinLive.JsonRPC;
 /// <summary>
 /// Extensions methods for the <see cref="JsonNode"/> class
 /// </summary>
-public static class JsonNodeExtensions
+public static class JrpcObjectDeserializationExtensions
 {
-	private static EvaluationOptions _schemaEevaluationOptions = new() 
+	private static EvaluationOptions _schemaEvaluationOptions = new() 
 	{ 
 		OutputFormat = OutputFormat.Hierarchical,
 		RequireFormatValidation = true
@@ -97,7 +97,7 @@ public static class JsonNodeExtensions
 
 	public static (JrpcPacket<JrpcRequest> Request, JrpcPacket<JrpcResponse> Response) ToJrpcObject(this JsonNode input)
 	{
-		var result1 = JrpcSchema.Request.Evaluate(input, _schemaEevaluationOptions);
+		var result1 = JrpcSchema.Request.Evaluate(input, _schemaEvaluationOptions);
 		if (result1.IsValid)
 		{
 			var requests = input.ParseJrpcRequest();
@@ -112,7 +112,12 @@ public static class JsonNodeExtensions
 				return (JrpcPacket<JrpcRequest>.Empty, responses);
 			}
 			else
-				throw new JrpcException("Input does not contain a valid JSON-RPC request.") {  SchemaEvaluationResult = [ result1, result2 ] };
+			{
+				var e = new JrpcException($"An input contains neither a valid JSON-RPC request nor a valid JSON-RPC response.");
+				e.Data.Add("JrpcRequestValidationResults", result1);
+				e.Data.Add("JrpcResponseValidationResults", result2);
+				throw e;
+			}
 		}
 	}
 
@@ -124,7 +129,7 @@ public static class JsonNodeExtensions
 	/// <exception cref="JrpcException">In case of the given JSON represents an invalid JSON-RPC request.</exception>
 	public static JrpcPacket<JrpcRequest> ToJrpcRequest(this JsonNode input)
 	{
-		var result = JrpcSchema.Request.Evaluate(input, _schemaEevaluationOptions);
+		var result = JrpcSchema.Request.Evaluate(input, _schemaEvaluationOptions);
 		if (result.IsValid)
 		{
 			var requests = input.ParseJrpcRequest();
@@ -132,8 +137,9 @@ public static class JsonNodeExtensions
 		}
 		else
 		{
-			var errorText = JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true });
-			throw new JrpcException($"Input does not contain a valid JSON-RPC request:{Environment.NewLine}{errorText}.") { SchemaEvaluationResult = [result] };
+			var e = new JrpcException($"An input does not contain a valid JSON-RPC request;");
+			e.Data.Add("JrpcRequestValidationResults", result);
+			throw e;
 		}
 	}
 
@@ -145,7 +151,7 @@ public static class JsonNodeExtensions
 	/// <exception cref="JrpcException">In case of the given JSON represents an invalid JSON-RPC response.</exception>
 	public static JrpcPacket<JrpcResponse> ToJrpcResponse(this JsonNode input)
 	{
-		var result = JrpcSchema.Response.Evaluate(input, _schemaEevaluationOptions);
+		var result = JrpcSchema.Response.Evaluate(input, _schemaEvaluationOptions);
 		if (result.IsValid)
 		{
 			var responses = input.ParseJrpcResponse();
@@ -153,8 +159,9 @@ public static class JsonNodeExtensions
 		}
 		else
 		{
-			var errorText = JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true });
-			throw new JrpcException($"Input does not contain a valid JSON-RPC response:{Environment.NewLine}{errorText}.") { SchemaEvaluationResult = [result] };
+			var e = new JrpcException($"An input does not contain a valid JSON-RPC response.");
+			e.Data.Add("JrpcResponseValidationResults", result);
+			throw e;
 		}
 	}
 }

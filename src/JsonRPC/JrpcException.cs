@@ -23,9 +23,6 @@ public class JrpcException : ApplicationException
 	public JrpcException(string? message, Exception? innerException)
 		: base(message, innerException) { }
 
-	//TODO: Refactor schema evaluation errors
-	public EvaluationResults[] SchemaEvaluationResult { get; init; } = [];
-
 	/// <summary>
 	/// Creates an instance of the <see cref="JrpcException"/> class for a unsupported identifier type
 	/// </summary>
