@@ -27,9 +27,9 @@ public class JrpcDelegatedDispatcher : JrpcDispatcherBase
 		var isNotNotification = request.ID is not null;
 		if (_methods.TryGetValue(request.Method, out var descriptor))
 		{
-			if (descriptor.Params is not null)
+			if (descriptor.ParamsSchema is not null)
 			{
-				var paramValidationResult = descriptor.Params.Evaluate(request.Params);
+				var paramValidationResult = descriptor.ParamsSchema.Evaluate(request.Params);
 				if (!paramValidationResult.IsValid)
 					return isNotNotification ? request.CreateError(JrpcError.InvalidParams) : null;
 			}

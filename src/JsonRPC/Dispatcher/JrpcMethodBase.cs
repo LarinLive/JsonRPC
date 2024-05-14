@@ -14,7 +14,7 @@ public abstract class JrpcMethodBase : IEquatable<JrpcMethodBase>
 	/// Creates a new instance of the <see cref="JrpcMethodBase"/> class.
 	/// </summary>
 	/// <param name="name">A method name</param>
-	public JrpcMethodBase(string name)
+	protected JrpcMethodBase(string name)
 	{
 		Name = name;
 	}
@@ -27,7 +27,7 @@ public abstract class JrpcMethodBase : IEquatable<JrpcMethodBase>
 	/// <summary>
 	/// The schema of the method parameters,
 	/// </summary>
-	public JsonSchema? Params { get; init; }
+	public JsonSchema? ParamsSchema { get; init; }
 
 	/// <summary>
 	/// The schema of the method result,

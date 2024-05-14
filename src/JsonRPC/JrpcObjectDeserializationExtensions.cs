@@ -11,7 +11,7 @@ namespace LarinLive.JsonRPC;
 /// </summary>
 public static class JrpcObjectDeserializationExtensions
 {
-	private static EvaluationOptions _schemaEvaluationOptions = new() 
+	private static readonly EvaluationOptions _schemaEvaluationOptions = new() 
 	{ 
 		OutputFormat = OutputFormat.Hierarchical,
 		RequireFormatValidation = true
@@ -134,7 +134,7 @@ public static class JrpcObjectDeserializationExtensions
 		}
 		else
 		{
-			var e = new JrpcException($"An input does not contain a valid JSON-RPC request;");
+			var e = new JrpcException($"An input does not contain a valid JSON-RPC request.");
 			e.Data.Add("JrpcRequestEvaluation", result);
 			throw e;
 		}
