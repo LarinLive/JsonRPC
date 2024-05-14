@@ -16,7 +16,7 @@ namespace LarinLive.JsonRPC.UnitTests;
 public class JsonRpcDispatcherTestSuite
 {
 	private static JrpcDelegatedMethod AddMethod()
-		=> new("add",
+		=> JrpcDelegatedMethod.Create("add",
 				(request, ct) =>
 				{
 					var args = JsonSerializer.Deserialize<decimal[]>(request.Params)!;
@@ -25,9 +25,8 @@ public class JsonRpcDispatcherTestSuite
 						sum = (sum ?? 0M) + args[i];
 					var response = (JrpcResponse?)request.CreateResult(JsonValue.Create(sum)!);
 					return Task.FromResult(response);
-				}
-			)
-		{ ParamsSchema = JsonSchema.FromText("""
+				},
+		JsonSchema.FromText("""
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"type": "array",
@@ -36,7 +35,7 @@ public class JsonRpcDispatcherTestSuite
 		"type": "number"
 	}
 }
-""") };
+"""));
 
 
 	[Fact]

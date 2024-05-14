@@ -11,10 +11,15 @@ namespace LarinLive.JsonRPC.Dispatcher;
 /// <summary>
 /// A JSON-RPC method with the handler as a delegate
 /// </summary>
-public class JrpcDelegatedMethod : JrpcMethodBase
+public sealed class JrpcDelegatedMethod : JrpcMethodBase
 {
 	private readonly Func<JrpcRequest, CancellationToken, Task<JrpcResponse?>> _func;
 
+	/// <summary>
+	/// Creates a new instance of the <see cref="JrpcDelegatedMethod"/> class.
+	/// </summary>
+	/// <param name="name">A JSON-RPC method name</param>
+	/// <param name="func">A JSON-RPC method body delegate.</param>
 	protected JrpcDelegatedMethod(string name, Func<JrpcRequest, CancellationToken, Task<JrpcResponse?>> func)
 		: base(name)
 	{
@@ -25,7 +30,7 @@ public class JrpcDelegatedMethod : JrpcMethodBase
 	/// Creates a new instance of the <see cref="JrpcDelegatedMethod"/> class.
 	/// </summary>
 	/// <param name="name">A JSON-RPC method name.</param>
-	/// <param name="func">A JSON-RPC method delegate.</param>
+	/// <param name="func">A JSON-RPC method body delegate.</param>
 	/// <param name="paramsSchema">A JSON schema for a JSON-RPC request params.</param>
 	public static JrpcDelegatedMethod Create(string name, Func<JrpcRequest, CancellationToken, Task<JrpcResponse?>> func, JsonSchema? paramsSchema = null)
 	{
@@ -36,13 +41,13 @@ public class JrpcDelegatedMethod : JrpcMethodBase
 	/// <summary>
 	/// Creates a new instance of the <see cref="JrpcDelegatedMethod"/> class using <see cref="JrpcMethodAttribule"/> as a source for the method information.
 	/// </summary>
-	/// <param name="func">A JSON-RPC method delegate.</param>
+	/// <param name="func">A JSON-RPC method body delegate.</param>
 	public static JrpcDelegatedMethod Create(Func<JrpcRequest, CancellationToken, Task<JrpcResponse?>> func)
 	{
 		var methodInfo = func.GetMethodInfo();
 		var attr = methodInfo?.GetCustomAttributes(typeof(JrpcMethodAttribule)).OfType<JrpcMethodAttribule>().FirstOrDefault();
 		if (attr is null)
-			throw new ArgumentException("The provided method should be marked with the [JrpcMethod] attribute.");
+			throw new ArgumentException("The provided method should be marked with the [JrpcMethod] attribute.", nameof(func));
 		var methodName = attr.MethodName ?? $"{methodInfo!.DeclaringType!.Name}.{methodInfo.Name}";
 		JsonSchema? paramsSchema = null;
 		if (attr.ParamsSchemaResourceName is not null) 

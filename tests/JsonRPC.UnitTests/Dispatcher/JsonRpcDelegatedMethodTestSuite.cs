@@ -19,8 +19,8 @@ public class JsonRpcDelegatedMethodTestSuite
 	public void SameInterfacesEqual()
 	{
 		// arrange
-		var a = new JrpcDelegatedMethod("aaa", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
-		var b = new JrpcDelegatedMethod("aaa", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
+		var a = JrpcDelegatedMethod.Create("aaa", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
+		var b = JrpcDelegatedMethod.Create("aaa", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
 		// act
 		var result = a.Equals(b);
 		// assert
@@ -31,7 +31,7 @@ public class JsonRpcDelegatedMethodTestSuite
 	public void NullInterfaceInequal()
 	{
 		// arrange
-		var a = new JrpcDelegatedMethod("aaa", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
+		var a = JrpcDelegatedMethod.Create("aaa", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
 		IEquatable<JrpcDelegatedMethod>? b = null;
 		// act
 		var result = a.Equals(b);
@@ -43,8 +43,8 @@ public class JsonRpcDelegatedMethodTestSuite
 	public void DifferentInterfacesInequal()
 	{
 		// arrange
-		var a = new JrpcDelegatedMethod("aaa", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
-		var b = new JrpcDelegatedMethod("bbb", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
+		var a = JrpcDelegatedMethod.Create("aaa", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
+		var b = JrpcDelegatedMethod.Create("bbb", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
 		// act
 		var result = a.Equals(b);
 		// assert
@@ -55,8 +55,8 @@ public class JsonRpcDelegatedMethodTestSuite
 	public void DifferentObjectsInequal()
 	{
 		// arrange
-		var a = new JrpcDelegatedMethod("aaa", AddExecuteAsync);
-		var b = new JrpcDelegatedMethod("bbb", AddExecuteAsync);
+		var a = JrpcDelegatedMethod.Create("aaa", AddExecuteAsync);
+		var b = JrpcDelegatedMethod.Create("bbb", AddExecuteAsync);
 		// act
 		var result = a.Equals(b);
 		// assert
@@ -67,8 +67,8 @@ public class JsonRpcDelegatedMethodTestSuite
 	public void SameObjectEqual()
 	{
 		// arrange
-		var a = new JrpcDelegatedMethod("aaa", AddExecuteAsync);
-		var b = new JrpcDelegatedMethod("aaa", AddExecuteAsync);
+		var a = JrpcDelegatedMethod.Create("aaa", AddExecuteAsync);
+		var b = JrpcDelegatedMethod.Create("aaa", AddExecuteAsync);
 		// act
 		var result = a.Equals(b);
 		// assert
@@ -79,11 +79,59 @@ public class JsonRpcDelegatedMethodTestSuite
 	public void NullObjectInequal()
 	{
 		// arrange
-		object a = new JrpcDelegatedMethod("aaa", AddExecuteAsync);
+		object a = JrpcDelegatedMethod.Create("aaa", AddExecuteAsync);
 		object ? b = null;
 		// act
 		var result = a.Equals(b);
 		// assert
 		Assert.False(result);
+	}
+
+	private Task<JrpcResponse?> JrprMethodWithoutAttribute(JrpcRequest request, CancellationToken ct)
+	{
+		return Task.FromResult<JrpcResponse?>(null);
+	}
+
+	[Fact]
+	public void JrprMethodAttributeAbsent()
+	{
+		// arrange
+		// act
+		// assert
+		Assert.Throws<ArgumentException>(() => JrpcDelegatedMethod.Create(JrprMethodWithoutAttribute));
+	}
+
+	[JrpcMethodAttribule]
+	private Task<JrpcResponse?> JrprMethodWithoutName(JrpcRequest request, CancellationToken ct)
+	{
+		return Task.FromResult<JrpcResponse?>(null);
+	}
+
+	[Fact]
+	public void JrprMethodAttributeWithEmtpyName()
+	{
+		// arrange
+		var expectedMethodName = $"{GetType().Name}.{nameof(JrprMethodWithoutName)}";
+		// act
+		var method = JrpcDelegatedMethod.Create(JrprMethodWithoutName);
+		// assert
+		Assert.Equal(expectedMethodName, method.Name);
+	}
+
+	private const string _testMethodName = "Test.Method";
+	[JrpcMethodAttribule(_testMethodName)]
+	private Task<JrpcResponse?> JrprMethodWithName(JrpcRequest request, CancellationToken ct)
+	{
+		return Task.FromResult<JrpcResponse?>(null);
+	}
+
+	[Fact]
+	public void JrprMethodAttributeWithName()
+	{
+		// arrange
+		// act
+		var method = JrpcDelegatedMethod.Create(JrprMethodWithName);
+		// assert
+		Assert.Equal(_testMethodName, method.Name);
 	}
 }

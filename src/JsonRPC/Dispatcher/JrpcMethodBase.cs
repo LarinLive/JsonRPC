@@ -13,7 +13,7 @@ public abstract class JrpcMethodBase : IEquatable<JrpcMethodBase>
 	/// <summary>
 	/// Creates a new instance of the <see cref="JrpcMethodBase"/> class.
 	/// </summary>
-	/// <param name="name">A method name</param>
+	/// <param name="name">A JSON-RPC method name</param>
 	protected JrpcMethodBase(string name)
 	{
 		Name = name;
