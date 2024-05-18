@@ -1,3 +1,4 @@
+using Json.Schema;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -10,15 +11,23 @@ namespace LarinLive.JsonRPC.Dispatcher;
 /// </summary>
 public class JrpcDelegatedDispatcher : JrpcDispatcherBase
 {
+	private static readonly EvaluationOptions _schemaEvaluationOptions = new()
+	{
+		OutputFormat = OutputFormat.Hierarchical,
+		RequireFormatValidation = true
+	};
 	private readonly Dictionary<string, JrpcMethodBase> _methods;
+	private readonly JrpcExceptionSerializationOptions? _errorOptions;
 
 	/// <summary>
-	/// Creates a new instance of the <see cref="JrpcDelegatedDispatcher"/> class
+	/// Creates a new instance of the <see cref="JrpcDelegatedDispatcher"/> class.
 	/// </summary>
-	/// <param name="methods">A JSON-RPC method handlers dictionary</param>
-	public JrpcDelegatedDispatcher(IReadOnlyCollection<JrpcMethodBase> methods)
+	/// <param name="methods">A JSON-RPC method handlers dictionary.</param>
+	/// <param name="errorOptions">An optional settings for exceptions serialization</param>
+	public JrpcDelegatedDispatcher(IReadOnlyCollection<JrpcMethodBase> methods, JrpcExceptionSerializationOptions? errorOptions = null)
 	{
 		_methods = methods.ToDictionary(m => m.Name, m => m);
+		_errorOptions = errorOptions;
 	}
 
 	/// <inheritdoc/>
@@ -29,9 +38,18 @@ public class JrpcDelegatedDispatcher : JrpcDispatcherBase
 		{
 			if (descriptor.ParamsSchema is not null)
 			{
-				var paramValidationResult = descriptor.ParamsSchema.Evaluate(request.Params);
+				var paramValidationResult = descriptor.ParamsSchema.Evaluate(request.Params, _schemaEvaluationOptions);
 				if (!paramValidationResult.IsValid)
-					return isNotNotification ? request.CreateError(JrpcError.InvalidParams) : null;
+				{
+					if (isNotNotification)
+					{
+						var e = new JrpcException($"Params are not valid.");
+						e.Data.Add("JrpcRequestParamsEvaluation", paramValidationResult);
+						return request.CreateError(JrpcError.InvalidParams.WithExceptionData(e, _errorOptions));
+					}
+					else
+						return null;
+				}
 			}
 			var response2 = await descriptor.ExecuteAsync(request, ct);
 			return isNotNotification ? response2 : null;

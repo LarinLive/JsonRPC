@@ -2,9 +2,15 @@ using System.Text.Json;
 
 namespace LarinLive.JsonRPC;
 
-public class JrpExceptionSerializationOptions
+/// <summary>
+/// A JSON-RPC exception serialization options.
+/// </summary>
+public class JrpcExceptionSerializationOptions
 {
-	public static readonly JrpExceptionSerializationOptions Default = new();
+	/// <summary>
+	/// An instance of the <see cref="JrpcExceptionSerializationOptions"/> with the default values.
+	/// </summary>
+	public static readonly JrpcExceptionSerializationOptions Default = new();
 
 	/// <summary>
 	/// Include inner exceptions in the output

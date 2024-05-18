@@ -20,7 +20,7 @@ public sealed class JrpcDelegatedMethod : JrpcMethodBase
 	/// </summary>
 	/// <param name="name">A JSON-RPC method name</param>
 	/// <param name="func">A JSON-RPC method body delegate.</param>
-	protected JrpcDelegatedMethod(string name, Func<JrpcRequest, CancellationToken, Task<JrpcResponse?>> func)
+	private JrpcDelegatedMethod(string name, Func<JrpcRequest, CancellationToken, Task<JrpcResponse?>> func)
 		: base(name)
 	{
 		_func = func;
@@ -45,9 +45,8 @@ public sealed class JrpcDelegatedMethod : JrpcMethodBase
 	public static JrpcDelegatedMethod Create(Func<JrpcRequest, CancellationToken, Task<JrpcResponse?>> func)
 	{
 		var methodInfo = func.GetMethodInfo();
-		var attr = methodInfo?.GetCustomAttributes(typeof(JrpcMethodAttribule)).OfType<JrpcMethodAttribule>().FirstOrDefault();
-		if (attr is null)
-			throw new ArgumentException("The provided method should be marked with the [JrpcMethod] attribute.", nameof(func));
+		var attr = methodInfo?.GetCustomAttributes(typeof(JrpcMethodAttribule)).OfType<JrpcMethodAttribule>().FirstOrDefault() 
+			?? throw new ArgumentException("The provided method should be marked with the [JrpcMethod] attribute.", nameof(func));
 		var methodName = attr.MethodName ?? $"{methodInfo!.DeclaringType!.Name}.{methodInfo.Name}";
 		JsonSchema? paramsSchema = null;
 		if (attr.ParamsSchemaResourceName is not null) 

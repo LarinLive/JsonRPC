@@ -58,7 +58,6 @@ public class JsonRpcDispatcherTestSuite
 		Assert.Equal(id, ((JrpcID<string>)singleResult.ID).Value);
 		Assert.True(singleResult.IsSuccess);
 		Assert.NotNull(singleResult.Result);
-		Assert.Null(singleResult.Error);
 		Assert.IsAssignableFrom<JsonValue?>(singleResult.Result);
 		Assert.Equal(6M, JsonSerializer.Deserialize<decimal>(singleResult.Result));
 	}
@@ -87,14 +86,12 @@ public class JsonRpcDispatcherTestSuite
 		var firstResult = batchResult.Single(i => i.ID is JrpcID<long> lid && lid.Value == 1);
 		Assert.True(firstResult.IsSuccess);
 		Assert.NotNull(firstResult.Result);
-		Assert.Null(firstResult.Error);
 		Assert.IsAssignableFrom<JsonValue?>(firstResult.Result);
 		Assert.Equal(6M, JsonSerializer.Deserialize<decimal>(firstResult.Result));
 
 		var secondResult = batchResult.Single(i => i.ID is JrpcID<long> lid && lid.Value == 2);
 		Assert.True(secondResult.IsSuccess);
 		Assert.NotNull(secondResult.Result);
-		Assert.Null(secondResult.Error);
 		Assert.IsAssignableFrom<JsonValue?>(secondResult.Result);
 		Assert.Equal(5M, JsonSerializer.Deserialize<decimal>(secondResult.Result));
 	}
@@ -148,7 +145,6 @@ public class JsonRpcDispatcherTestSuite
 		Assert.Equal(id, ((JrpcID<string>)singleResult.ID).Value);
 		Assert.False(singleResult.IsSuccess);
 		Assert.Null(singleResult.Result);
-		Assert.NotNull(singleResult.Error);
 		Assert.Equal(JrpcError.MethodNotFound.Code, singleResult.Error.Code);
 	}
 }

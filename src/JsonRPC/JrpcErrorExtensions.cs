@@ -11,7 +11,7 @@ namespace LarinLive.JsonRPC;
 /// </summary>
 public static class JrpcErrorExtensions
 {
-	public static JsonObject ToJsonObject(this Exception e, JrpExceptionSerializationOptions options)
+	public static JsonObject ToJsonObject(this Exception e, JrpcExceptionSerializationOptions options)
 	{
 		var result = new JsonObject()
 			.AddProperty("type", e.GetType().Name)
@@ -46,8 +46,8 @@ public static class JrpcErrorExtensions
 	/// <param name="exception">An exception to serialize.</param>
 	/// <param name="options">An error serialization options.</param>
 	/// <returns>A newely created instance of <see cref="JrpcError"/> class with the given exception information.</returns>
-	public static JrpcError WithExceptionData(this JrpcError error, Exception exception, JrpExceptionSerializationOptions? options)
+	public static JrpcError WithExceptionData(this JrpcError error, Exception exception, JrpcExceptionSerializationOptions? options)
 		=> error.CopyWithData(
 			new JsonObject()
-				.AddProperty("exception", exception.ToJsonObject(options ?? JrpExceptionSerializationOptions.Default)));
+				.AddProperty("exception", exception.ToJsonObject(options ?? JrpcExceptionSerializationOptions.Default)));
 }
