@@ -45,7 +45,7 @@ public class JrpcDelegatedDispatcher : JrpcDispatcherBase
 					{
 						var e = new JrpcException($"Params are not valid.");
 						e.Data.Add("JrpcRequestParamsEvaluation", paramValidationResult);
-						return request.CreateError(JrpcError.InvalidParams.CopyWithException(e));
+						return request.CreateError(JrpcError.InvalidParams.WithException(e));
 					}
 					else
 						return null;

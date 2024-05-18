@@ -69,5 +69,5 @@ public abstract class JrpcDispatcherBase : IJrpcDispatcher
 	/// <param name="exception">An error occured while the request execution.</param>
 	/// <returns></returns>
 	protected virtual JrpcResponse? HandleException(JrpcRequest request, Exception exception)
-		=> request.CreateError(JrpcError.InternalError.CopyWithException(exception));
+		=> request.CreateError(JrpcError.InternalError.WithException(exception));
 }

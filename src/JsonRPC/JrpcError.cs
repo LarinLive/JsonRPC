@@ -85,7 +85,7 @@ public struct JrpcError
 	/// </summary>
 	/// <param name="data">An error details.</param>
 	/// <returns>A newly created <see cref="JrpcError"/> instance</returns>
-	public JrpcError CopyWithData(JsonNode? data)
+	public JrpcError WithData(JsonNode? data)
 	{
 		return new JrpcError(Code, Message, data);
 	}
@@ -95,7 +95,7 @@ public struct JrpcError
 	/// </summary>
 	/// <param name="e">An exception.</param>
 	/// <returns>A newly created <see cref="JrpcError"/> instance</returns>
-	public JrpcError CopyWithException(Exception e)
+	public JrpcError WithException(Exception e)
 	{
 		return new JrpcError(Code, Message, e);
 	}
