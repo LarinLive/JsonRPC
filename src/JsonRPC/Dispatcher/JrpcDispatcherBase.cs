@@ -63,11 +63,11 @@ public abstract class JrpcDispatcherBase : IJrpcDispatcher
 	protected abstract Task<JrpcResponse?> ExecuteRequestItemAsync(JrpcRequest request, CancellationToken ct);
 
 	/// <summary>
-	/// Creates a JSON-RPC error for the given request exception
+	/// Creates a JSON-RPC error for the given request exception.
 	/// </summary>
-	/// <param name="request">A request whose execution was broken</param>
-	/// <param name="exception">An error occured while the request execution</param>
+	/// <param name="request">A request whose execution was broken.</param>
+	/// <param name="exception">An error occured while the request execution.</param>
 	/// <returns></returns>
 	protected virtual JrpcResponse? HandleException(JrpcRequest request, Exception exception)
-		=> request.CreateError(JrpcError.InternalError);
+		=> request.CreateError(JrpcError.InternalError.CopyWithException(exception));
 }
