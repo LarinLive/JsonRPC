@@ -129,6 +129,7 @@ public sealed class JrpcSerialiazer
 			WriteTo(response.Item, ref writer);
 	}
 
+	/*
 	public JsonObject ToJsonNode(JrpcRequest request)
 	{
 		var result = new JsonObject()
@@ -165,6 +166,8 @@ public sealed class JrpcSerialiazer
 				.AddProperty("message", error.Message);
 			if (error.Data is not null)
 				e.AddProperty("data", error.Data);
+			else if (error.Exception is not null)
+				e.AddProperty("data", error.Data);
 			result.AddProperty("error", e);
 		}
 		return result;
@@ -178,5 +181,5 @@ public sealed class JrpcSerialiazer
 		else
 			result = ToJsonNode(response.Item!);
 		return result;
-	}
+	}*/
 }
