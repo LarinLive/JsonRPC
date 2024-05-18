@@ -22,7 +22,7 @@ public sealed class JrpcSerializer
 		_exceptionSerializerOptions = exceptionSerializationOptions ?? JrpcExceptionSerializerOptions.Default;
 	}
 
-	public void WriteTo(JrpcRequest request, ref Utf8JsonWriter writer)
+	public void WriteTo(JrpcRequest request, Utf8JsonWriter writer)
 	{
 		writer.WriteStartObject();
 		writer.WriteString("jsonrpc", "2.0");
@@ -40,20 +40,20 @@ public sealed class JrpcSerializer
 		writer.WriteEndObject();
 	}
 
-	public void WriteTo(JrpcPacket<JrpcRequest> request, ref Utf8JsonWriter writer)
+	public void WriteTo(JrpcPacket<JrpcRequest> request, Utf8JsonWriter writer)
 	{
 		if (request.IsBatch)
 		{
 			writer.WriteStartArray();
 			for (var i = 0; i < request.Batch.Length; i++)
-				WriteTo(request.Batch[i], ref writer);
+				WriteTo(request.Batch[i], writer);
 			writer.WriteEndArray();
 		}
 		else
-			WriteTo(request.Item, ref writer);
+			WriteTo(request.Item, writer);
 	}
 
-	private void WriteException(Exception e, ref Utf8JsonWriter writer)
+	private void WriteException(Exception e, Utf8JsonWriter writer)
 	{
 		writer.WriteStartObject("exception");
 		writer.WriteString("type", e.GetType().Name);
@@ -77,12 +77,12 @@ public sealed class JrpcSerializer
 		}
 
 		if (_exceptionSerializerOptions.IncludeInnerExceptions && e.InnerException is not null)
-			WriteException(e.InnerException, ref writer);
+			WriteException(e.InnerException, writer);
 		writer.WriteEndObject();
 	}
 
 
-	public void WriteTo(JrpcResponse response, ref Utf8JsonWriter writer)
+	public void WriteTo(JrpcResponse response, Utf8JsonWriter writer)
 	{
 		writer.WriteStartObject();
 		writer.WriteString("jsonrpc", "2.0");
@@ -107,7 +107,7 @@ public sealed class JrpcSerializer
 			else if (error.Exception is not null)
 			{
 				writer.WriteStartObject("data");
-				WriteException(error.Exception, ref writer);
+				WriteException(error.Exception, writer);
 				writer.WriteEndObject();
 			}
 
@@ -116,17 +116,17 @@ public sealed class JrpcSerializer
 		writer.WriteEndObject();
 	}
 
-	public void WriteTo(JrpcPacket<JrpcResponse> response, ref Utf8JsonWriter writer)
+	public void WriteTo(JrpcPacket<JrpcResponse> response, Utf8JsonWriter writer)
 	{
 		if (response.IsBatch)
 		{
 			writer.WriteStartArray();
 			for (var i = 0; i < response.Batch.Length; i++)
-				WriteTo(response.Batch[i], ref writer);
+				WriteTo(response.Batch[i], writer);
 			writer.WriteEndArray();
 		}
 		else
-			WriteTo(response.Item, ref writer);
+			WriteTo(response.Item, writer);
 	}
 
 	/*
