@@ -64,14 +64,11 @@ public sealed class JrpcSerializer
 		if (e.Data is not null)
 		{
 			writer.WriteStartObject("data");
-			var data = new JsonObject();
-			var ms = new MemoryStream();
 			foreach (var key in e.Data.Keys.OfType<string>())
 			{
 				writer.WritePropertyName(key);
 				var value = e.Data[key];
 				JsonSerializer.Serialize(writer, value, _exceptionSerializerOptions.JsonSerializerOptions ?? JsonSerializerOptions.Default);
-				data.AddProperty(key, JsonNode.Parse(ms));
 			}
 			writer.WriteEndObject();
 		}

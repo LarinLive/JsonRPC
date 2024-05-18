@@ -14,7 +14,8 @@ public readonly struct JrpcID<T>: IJrpcID, IEquatable<JrpcID<T>>, IEquatable<IJr
 	{
 		typeof(string), typeof(Guid), 
 		typeof(long), typeof(int), typeof(short), typeof(sbyte),
-		typeof(ulong), typeof(uint), typeof(ushort), typeof(byte) 
+		typeof(ulong), typeof(uint), typeof(ushort), typeof(byte),
+		typeof(decimal)
 	};
 
 	/// <summary>
@@ -62,13 +63,51 @@ public readonly struct JrpcID<T>: IJrpcID, IEquatable<JrpcID<T>>, IEquatable<IJr
 		uint u32 => (JsonValue)u32,
 		ushort u16 => (JsonValue)u16,
 		byte u8 => (JsonValue)u8,
+		decimal d => (JsonValue)d,
 		_ => throw JrpcException.UnsupportedIdentifierType()
 	};
 
 	/// <inheritdoc/>
 	public void WriteTo(Utf8JsonWriter writer)
 	{
-		JsonSerializer.Serialize(writer, Value);
+		switch (Value)
+		{
+			case string s: 
+				writer.WriteStringValue(s);
+				break;
+			case Guid s:
+				writer.WriteStringValue(s.ToString("D"));
+				break;
+			case long i64:
+				writer.WriteNumberValue(i64);
+				break;
+			case int i32:
+				writer.WriteNumberValue(i32);
+				break;
+			case short i16:
+				writer.WriteNumberValue(i16);
+				break;
+			case sbyte i8:
+				writer.WriteNumberValue(i8);
+				break;
+			case ulong u64:
+				writer.WriteNumberValue(u64);
+				break;
+			case uint u32:
+				writer.WriteNumberValue(u32);
+				break;
+			case ushort u16:
+				writer.WriteNumberValue(u16);
+				break;
+			case byte u8:
+				writer.WriteNumberValue(u8);
+				break;
+			case decimal d:
+				writer.WriteNumberValue(d);
+				break;
+			default:
+				throw JrpcException.UnsupportedIdentifierType();
+		}
 	}
 
 	/// <inheritdoc/>
