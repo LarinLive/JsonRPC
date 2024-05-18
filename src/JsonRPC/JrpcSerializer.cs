@@ -9,17 +9,17 @@ namespace LarinLive.JsonRPC;
 /// <summary>
 /// The serializer for JSON-RPC objects.
 /// </summary>
-public sealed class JrpcSerialiazer
+public sealed class JrpcSerializer
 {
-	private readonly JrpcExceptionSerializationOptions _exceptionSerializationOptions;
+	private readonly JrpcExceptionSerializerOptions _exceptionSerializerOptions;
 
 	/// <summary>
-	/// Creates a new instance of the <see cref="JrpcSerialiazer"/> class.
+	/// Creates a new instance of the <see cref="JrpcSerializer"/> class.
 	/// </summary>
 	/// <param name="exceptionSerializationOptions">An optional exception serializaion parameters.</param>
-	public JrpcSerialiazer(JrpcExceptionSerializationOptions? exceptionSerializationOptions = null)
+	public JrpcSerializer(JrpcExceptionSerializerOptions? exceptionSerializationOptions = null)
 	{
-		_exceptionSerializationOptions = exceptionSerializationOptions ?? JrpcExceptionSerializationOptions.Default;
+		_exceptionSerializerOptions = exceptionSerializationOptions ?? JrpcExceptionSerializerOptions.Default;
 	}
 
 	public void WriteTo(JrpcRequest request, ref Utf8JsonWriter writer)
@@ -59,7 +59,7 @@ public sealed class JrpcSerialiazer
 		writer.WriteString("type", e.GetType().Name);
 		writer.WriteString("source", e.Source);
 		writer.WriteString("message", e.Message);
-		if (_exceptionSerializationOptions.IncludeStackTrace)
+		if (_exceptionSerializerOptions.IncludeStackTrace)
 			writer.WriteString("stackTrace", e.StackTrace);
 		if (e.Data is not null)
 		{
@@ -70,13 +70,13 @@ public sealed class JrpcSerialiazer
 			{
 				writer.WritePropertyName(key);
 				var value = e.Data[key];
-				JsonSerializer.Serialize(writer, value, _exceptionSerializationOptions.JsonSerializerOptions ?? JsonSerializerOptions.Default);
+				JsonSerializer.Serialize(writer, value, _exceptionSerializerOptions.JsonSerializerOptions ?? JsonSerializerOptions.Default);
 				data.AddProperty(key, JsonNode.Parse(ms));
 			}
 			writer.WriteEndObject();
 		}
 
-		if (_exceptionSerializationOptions.IncludeInnerExceptions && e.InnerException is not null)
+		if (_exceptionSerializerOptions.IncludeInnerExceptions && e.InnerException is not null)
 			WriteException(e.InnerException, ref writer);
 		writer.WriteEndObject();
 	}

@@ -5,12 +5,12 @@ namespace LarinLive.JsonRPC;
 /// <summary>
 /// A JSON-RPC exception serialization options.
 /// </summary>
-public class JrpcExceptionSerializationOptions
+public class JrpcExceptionSerializerOptions
 {
 	/// <summary>
-	/// An instance of the <see cref="JrpcExceptionSerializationOptions"/> with the default values.
+	/// An instance of the <see cref="JrpcExceptionSerializerOptions"/> with the default values.
 	/// </summary>
-	public static readonly JrpcExceptionSerializationOptions Default = new();
+	public static readonly JrpcExceptionSerializerOptions Default = new();
 
 	/// <summary>
 	/// Include inner exceptions in the output
