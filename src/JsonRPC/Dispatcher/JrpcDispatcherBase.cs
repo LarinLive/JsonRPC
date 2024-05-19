@@ -27,8 +27,9 @@ public abstract class JrpcDispatcherBase : IJrpcDispatcher
 			await Parallel.ForEachAsync(request.ToArray(), ct,
 				async (r, c) =>
 				{
-					var response = await ExecuteRequestItemAsync(r, c);
-					batch.TryAdd(r, response);
+					var itemResult = await DoExecuteRequestItemAsync(r, c);
+					if (itemResult.HasValue)
+						batch.TryAdd(r, itemResult.Value);
 				});
 			var batchResult = batch.Values.Where(v => v is not null).Select(v => v!.Value).ToArray();
 			if (batchResult.Length > 0)
@@ -39,19 +40,23 @@ public abstract class JrpcDispatcherBase : IJrpcDispatcher
 		else
 		{
 			var singleRequest = request.Item!;
-			JrpcResponse? itemResult;
-			try
-			{
-				itemResult = await ExecuteRequestItemAsync(singleRequest, ct);
-			}
-			catch (Exception e)
-			{
-				itemResult = HandleException(singleRequest, e);
-			}
+			var itemResult = await DoExecuteRequestItemAsync(singleRequest, ct);
 			if (itemResult.HasValue)
 				result = itemResult.Value;
 		}
 		return result;
+	}
+
+	private async Task<JrpcResponse?> DoExecuteRequestItemAsync(JrpcRequest request, CancellationToken ct)
+	{
+		try
+		{
+			return await ExecuteRequestItemAsync(request, ct);
+		}
+		catch (Exception e)
+		{
+			return request.ID is not null ? HandleException(request, e) : null;
+		}
 	}
 
 	/// <summary>

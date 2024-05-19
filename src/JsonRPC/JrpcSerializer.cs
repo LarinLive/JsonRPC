@@ -56,7 +56,7 @@ public sealed class JrpcSerializer
 	private void WriteException(Exception e, Utf8JsonWriter writer)
 	{
 		writer.WriteStartObject("exception");
-		writer.WriteString("type", e.GetType().Name);
+		writer.WriteString("type", e.GetType().FullName);
 		writer.WriteString("source", e.Source);
 		writer.WriteString("message", e.Message);
 		if (_exceptionSerializerOptions.IncludeStackTrace)
