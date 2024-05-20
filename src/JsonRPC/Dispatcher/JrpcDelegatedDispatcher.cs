@@ -17,17 +17,14 @@ public class JrpcDelegatedDispatcher : JrpcDispatcherBase
 		RequireFormatValidation = true
 	};
 	private readonly Dictionary<string, JrpcMethodBase> _methods;
-	private readonly JrpcExceptionSerializerOptions? _errorOptions;
 
 	/// <summary>
 	/// Creates a new instance of the <see cref="JrpcDelegatedDispatcher"/> class.
 	/// </summary>
 	/// <param name="methods">A JSON-RPC method handlers dictionary.</param>
-	/// <param name="errorOptions">An optional settings for exceptions serialization</param>
-	public JrpcDelegatedDispatcher(IReadOnlyCollection<JrpcMethodBase> methods, JrpcExceptionSerializerOptions? errorOptions = null)
+	public JrpcDelegatedDispatcher(IReadOnlyCollection<JrpcMethodBase> methods)
 	{
 		_methods = methods.ToDictionary(m => m.Name, m => m);
-		_errorOptions = errorOptions;
 	}
 
 	/// <inheritdoc/>

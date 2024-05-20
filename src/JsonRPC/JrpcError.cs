@@ -35,6 +35,17 @@ public struct JrpcError
 	public static readonly JrpcError InternalError = new(-32603, "Internal error", (JsonNode)null!);
 
 	/// <summary>
+	/// Initializes a new <see cref="JrpcError"/>> instance with the general error infrormation.
+	/// </summary>
+	/// <param name="code">An error code</param>
+	/// <param name="message">An error message</param>
+	public JrpcError(int code, string message)
+	{
+		Code = code;
+		Message = message;
+	}
+
+	/// <summary>
 	/// Initializes a new <see cref="JrpcError"/>> instance with the specified error infrormation.
 	/// </summary>
 	/// <param name="code">An error code</param>
@@ -48,7 +59,7 @@ public struct JrpcError
 	}
 
 	/// <summary>
-	/// Initializes a new <see cref="JrpcError"/>> instance with the specified error infrormation.
+	/// Initializes a new <see cref="JrpcError"/>> instance with the specified exception infrormation.
 	/// </summary>
 	/// <param name="code">An error code.</param>
 	/// <param name="message">An error message.</param>
