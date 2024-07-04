@@ -11,7 +11,7 @@ public readonly record struct JrpcResponse : IJrpcObject
 	private readonly JrpcError _error = default;
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="JrpcResponse"/> struct for a successful result.
+	/// Initializes a new instance of the <see cref="JrpcResponse"/> structure for a successful result.
 	/// </summary>
 	/// <param name="result">An optional result data.</param>
 	/// <param name="id">A JSON-RPC request identifier.</param>

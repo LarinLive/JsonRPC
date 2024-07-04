@@ -14,7 +14,7 @@ public static class JrpcRequestExtensions
 	/// <param name="result">A result</param>
 	/// <returns>A new instance of the <see cref="JrpcResponse"/> with the id of the given request</returns>
 	public static JrpcResponse CreateResult(this JrpcRequest request, JsonNode result)
-		=> new(result, request.ID);
+		=> new(result, request.ID ?? throw JrpcException.CannotCreateResponseForNotification());
 
 	/// <summary>
 	/// Creates an error response for the given request object
@@ -23,5 +23,5 @@ public static class JrpcRequestExtensions
 	/// <param name="error">An error description</param>
 	/// <returns>A new instance of the <see cref="JrpcResponse"/> with the id of the given request</returns>
 	public static JrpcResponse CreateError(this JrpcRequest request, JrpcError error)
-		=> new(error, request.ID);
+		=> new(error, request.ID ?? throw JrpcException.CannotCreateResponseForNotification());
 }

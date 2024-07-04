@@ -10,13 +10,13 @@ namespace LarinLive.JsonRPC;
 /// </summary>
 public readonly struct JrpcID<T>: IJrpcID, IEquatable<JrpcID<T>>, IEquatable<IJrpcID> where T : notnull 
 {
-	private static readonly IReadOnlySet<Type> _allowedTypes = new HashSet<Type>()
-	{
+	private static readonly HashSet<Type> _allowedTypes =
+	[
 		typeof(string), typeof(Guid), 
 		typeof(long), typeof(int), typeof(short), typeof(sbyte),
 		typeof(ulong), typeof(uint), typeof(ushort), typeof(byte),
 		typeof(decimal)
-	};
+	];
 
 	/// <summary>
 	/// Creates a new instance of the <see cref="JrpcID{T}"/> class

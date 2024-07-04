@@ -92,6 +92,11 @@ public static class JrpcObjectDeserializationExtensions
 			return ParseResponseItem(input);
 	}
 
+	/// <summary>
+	/// Converts an instance of the <see cref="JsonNode"/> class to a JSON-RPC request or a JSON-RPC response. 
+	/// </summary>
+	/// <param name="input">An input JSON node.</param>
+	/// <returns>A tuple with a JSON request and a JSON response structures.</returns>
 	public static (JrpcPacket<JrpcRequest> Request, JrpcPacket<JrpcResponse> Response) ToJrpcObject(this JsonNode input)
 	{
 		var result1 = JrpcSchema.Request.Evaluate(input, _schemaEvaluationOptions);

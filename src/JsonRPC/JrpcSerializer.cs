@@ -1,8 +1,6 @@
-using System.IO;
 using System;
 using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 
 namespace LarinLive.JsonRPC;
 
@@ -22,7 +20,14 @@ public sealed class JrpcSerializer
 		_exceptionSerializerOptions = exceptionSerializationOptions ?? JrpcExceptionSerializerOptions.Default;
 	}
 
+#pragma warning disable CA1822 // Mark members as static
+	/// <summary>
+	/// Writes a single JSON-RPC request to a specified JSON writer
+	/// </summary>
+	/// <param name="request">A JSON-RPC request</param>
+	/// <param name="writer">A JSON writer</param>
 	public void WriteTo(JrpcRequest request, Utf8JsonWriter writer)
+#pragma warning restore CA1822 // Mark members as static
 	{
 		writer.WriteStartObject();
 		writer.WriteString("jsonrpc", "2.0");
@@ -40,6 +45,11 @@ public sealed class JrpcSerializer
 		writer.WriteEndObject();
 	}
 
+	/// <summary>
+	/// Writes a JSON-RPC request packet to a specified JSON writer
+	/// </summary>
+	/// <param name="request">A JSON-RPC request packet</param>
+	/// <param name="writer">A JSON writer</param>
 	public void WriteTo(JrpcPacket<JrpcRequest> request, Utf8JsonWriter writer)
 	{
 		if (request.IsBatch)
@@ -78,7 +88,11 @@ public sealed class JrpcSerializer
 		writer.WriteEndObject();
 	}
 
-
+	/// <summary>
+	/// Writes a single JSON-RPC response to a specified JSON writer
+	/// </summary>
+	/// <param name="response">A JSON-RPC response</param>
+	/// <param name="writer">A JSON writer</param>
 	public void WriteTo(JrpcResponse response, Utf8JsonWriter writer)
 	{
 		writer.WriteStartObject();
@@ -113,6 +127,11 @@ public sealed class JrpcSerializer
 		writer.WriteEndObject();
 	}
 
+	/// <summary>
+	/// Writes a JSON-RPC response packet to a specified JSON writer
+	/// </summary>
+	/// <param name="response">A JSON-RPC response packet</param>
+	/// <param name="writer">A JSON writer</param>
 	public void WriteTo(JrpcPacket<JrpcResponse> response, Utf8JsonWriter writer)
 	{
 		if (response.IsBatch)
