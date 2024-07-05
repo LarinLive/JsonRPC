@@ -3,5 +3,8 @@
 	"version": "0.20-preview",
 	"publicReleaseRefSpec": [
 		"^refs/heads/main$"
-	]
+	],
+	"nugetPackageVersion": {
+		"semVer": 2
+	}
 }
