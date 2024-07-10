@@ -1,0 +1,8 @@
+<Project>
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+	
+	<!-- Separate build artifacts -->
+	<PropertyGroup>
+		<ArtifactsPath>$(MSBuildThisFileDirectory)..\artifacts</ArtifactsPath>
+	</PropertyGroup>
+</Project>
