@@ -21,6 +21,12 @@
 		<NeutralLanguage>en</NeutralLanguage>
 	</PropertyGroup>
 
+	<!-- Separate build artifacts -->
+	<PropertyGroup>
+		<UseArtifactsOutput>true</UseArtifactsOutput>
+		<ArtifactsPath>$(MSBuildThisFileDirectory)artifacts</ArtifactsPath>
+	</PropertyGroup>
+
 	<!-- Use Nerdbank.GitVersioning -->
 	<ItemGroup>
 		<PackageReference 

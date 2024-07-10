@@ -16,8 +16,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonRPC", "src\JsonRPC\JsonRPC.csproj", "{CEA0E2DB-34A4-48C1-B05C-705605F8841C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E5C09A83-8E4E-4E1C-8F5A-A1D6DEF5951A}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{90423816-2148-4B78-A1B2-45FB89219183}"
+	ProjectSection(SolutionItems) = preProject
+		tests\Directory.Build.props = tests\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonRPC.UnitTests", "tests\JsonRPC.UnitTests\JsonRPC.UnitTests.csproj", "{0700B392-561D-46C6-937A-C2AA87ACDF5D}"
 EndProject

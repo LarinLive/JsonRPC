@@ -3,7 +3,7 @@ using System.Text.Json.Nodes;
 namespace LarinLive.JsonRPC;
 
 /// <summary>
-/// Extension methods for the <see cref="JrpcRequest"/> class
+/// Extension methods for the <see cref="JrpcRequest"/> class.
 /// </summary>
 public static class JrpcRequestExtensions
 {
