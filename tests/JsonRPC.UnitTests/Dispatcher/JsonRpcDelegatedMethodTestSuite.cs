@@ -5,14 +5,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace LarinLive.JsonRPC.UnitTests;
+namespace LarinLive.JsonRPC.UnitTests.Dispatcher;
 
 /// <summary>
 /// Tests for the <see cref="JrpcDelegatedMethod"/> class
 /// </summary>
 public class JsonRpcDelegatedMethodTestSuite
 {
-	private static Task<JrpcResponse?> AddExecuteAsync(JrpcRequest request, CancellationToken ct) 
+	private static Task<JrpcResponse?> AddExecuteAsync(JrpcRequest request, CancellationToken ct)
 		=> Task.FromResult((JrpcResponse?)request.CreateResult(JsonValue.Create(42)));
 
 	[Fact]
@@ -32,7 +32,7 @@ public class JsonRpcDelegatedMethodTestSuite
 	{
 		// arrange
 		var a = JrpcDelegatedMethod.Create("aaa", AddExecuteAsync) as IEquatable<JrpcMethodBase>;
-		IEquatable<JrpcDelegatedMethod>? b = null;
+		IEquatable<JrpcMethodBase>? b = null;
 		// act
 		var result = a.Equals(b);
 		// assert
@@ -80,7 +80,7 @@ public class JsonRpcDelegatedMethodTestSuite
 	{
 		// arrange
 		object a = JrpcDelegatedMethod.Create("aaa", AddExecuteAsync);
-		object ? b = null;
+		object? b = null;
 		// act
 		var result = a.Equals(b);
 		// assert

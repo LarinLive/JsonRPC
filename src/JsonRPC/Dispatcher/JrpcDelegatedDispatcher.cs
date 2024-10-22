@@ -1,4 +1,5 @@
 using Json.Schema;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -24,7 +25,7 @@ public class JrpcDelegatedDispatcher : JrpcDispatcherBase
 	/// <param name="methods">A JSON-RPC method handlers dictionary.</param>
 	public JrpcDelegatedDispatcher(IReadOnlyCollection<JrpcMethodBase> methods)
 	{
-		_methods = methods.ToDictionary(m => m.Name, m => m);
+		_methods = methods.ToDictionary(m => m.Name, m => m, StringComparer.Ordinal);
 	}
 
 	/// <inheritdoc/>
