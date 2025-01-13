@@ -14,10 +14,10 @@
 	    <AssemblyName>LarinLive.$(MSBuildProjectName)</AssemblyName>
 	    <RootNamespace>LarinLive.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
 		<Authors>Anton Larin</Authors>
-		<Company>LarinLive</Company>
+		<Company>Anton Larin</Company>
 		<Product>JsonRPC</Product>
 		<Title>JsonRPC</Title>
-		<Copyright>Copyright (c) LarinLive, 2023-2024. All rights reserved.</Copyright>
+		<Copyright>Copyright (c) Anton Larin, 2023-2025. All rights reserved.</Copyright>
 		<NeutralLanguage>en</NeutralLanguage>
 	</PropertyGroup>
 
