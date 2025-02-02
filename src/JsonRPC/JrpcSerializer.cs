@@ -78,7 +78,7 @@ public sealed class JrpcSerializer
 			{
 				writer.WritePropertyName(key);
 				var value = e.Data[key];
-				JsonSerializer.Serialize(writer, value, _exceptionSerializerOptions.JsonSerializerOptions ?? JsonSerializerOptions.Default);
+				JsonSerializer.Serialize(writer, value);
 			}
 			writer.WriteEndObject();
 		}

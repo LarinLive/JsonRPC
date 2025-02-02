@@ -11,13 +11,17 @@
 
 	<!-- Version info -->
 	<PropertyGroup>
-	    <AssemblyName>LarinLive.$(MSBuildProjectName)</AssemblyName>
-	    <RootNamespace>LarinLive.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-		<Authors>Anton Larin</Authors>
+		<AssemblyName>LarinLive.$(MSBuildProjectName)</AssemblyName>
+		<RootNamespace>LarinLive.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
 		<Company>Anton Larin</Company>
 		<Product>JsonRPC</Product>
-		<Title>JsonRPC</Title>
 		<Copyright>Copyright (c) Anton Larin, 2023-2025. All rights reserved.</Copyright>
+	</PropertyGroup>
+
+	<!-- Package info -->
+	<PropertyGroup>
+		<Authors>Anton Larin</Authors>
+		<Title>$(MSBuildProjectName)</Title>
 		<NeutralLanguage>en</NeutralLanguage>
 	</PropertyGroup>
 

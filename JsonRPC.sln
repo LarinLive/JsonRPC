@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{90423816
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonRPC.UnitTests", "tests\JsonRPC.UnitTests\JsonRPC.UnitTests.csproj", "{0700B392-561D-46C6-937A-C2AA87ACDF5D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonRPC.AspNetCore", "src\JsonRPC.AspNetCore\JsonRPC.AspNetCore.csproj", "{262BCC0D-1252-4E2A-BB1B-EBD6C7E60227}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{0700B392-561D-46C6-937A-C2AA87ACDF5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0700B392-561D-46C6-937A-C2AA87ACDF5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0700B392-561D-46C6-937A-C2AA87ACDF5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{262BCC0D-1252-4E2A-BB1B-EBD6C7E60227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{262BCC0D-1252-4E2A-BB1B-EBD6C7E60227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{262BCC0D-1252-4E2A-BB1B-EBD6C7E60227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{262BCC0D-1252-4E2A-BB1B-EBD6C7E60227}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CEA0E2DB-34A4-48C1-B05C-705605F8841C} = {E5C09A83-8E4E-4E1C-8F5A-A1D6DEF5951A}
 		{0700B392-561D-46C6-937A-C2AA87ACDF5D} = {90423816-2148-4B78-A1B2-45FB89219183}
+		{262BCC0D-1252-4E2A-BB1B-EBD6C7E60227} = {E5C09A83-8E4E-4E1C-8F5A-A1D6DEF5951A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42F76AFC-CBD6-4298-96E0-6CF8B22CFB8F}

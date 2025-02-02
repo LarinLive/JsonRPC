@@ -1,10 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\JsonRPC\JsonRPC.csproj" />
+	</ItemGroup>
 
 	<PropertyGroup>
 		<IsPackable>true</IsPackable>
@@ -18,29 +22,14 @@
 		<PackageProjectUrl>https://github.com/LarinLive/JsonRPC</PackageProjectUrl>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/LarinLive/JsonRPC</RepositoryUrl>
-		<Description>The JsonRPC package constains a .NET-based implementation of the JSON-RPC 2.0 specification.</Description>
+		<Description>The JsonRPC.AspNetCore package contains an ASP.NET Core endpoint implementation for processing JSON-RPC 2.0 requests.</Description>
 		<NoWin32Manifest>true</NoWin32Manifest>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Include="schema\request.json" />
-		<EmbeddedResource Include="schema\response.json" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Include="$(SolutionDir)LICENSE" Pack="true" Visible="false" PackagePath="" />
 		<None Include="$(SolutionDir)README.md" Pack="true" Visible="false" PackagePath="" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="JsonSchema.Net" Version="7.3.1" />
-		<PackageReference Include="System.Text.Json" Version="9.0.1" />
-		<PackageReference Include="System.Threading.Channels" Version="9.0.1" />
 	</ItemGroup>
 </Project>

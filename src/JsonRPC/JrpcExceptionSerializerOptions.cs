@@ -21,9 +21,4 @@ public class JrpcExceptionSerializerOptions
 	/// Include a stack trace in the output
 	/// </summary>
 	public bool IncludeStackTrace { get; init; } = false;
-
-	/// <summary>
-	/// Output serialization options.
-	/// </summary>
-	public JsonSerializerOptions? JsonSerializerOptions { get; init; } 
 }
